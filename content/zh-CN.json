@@ -1,20 +1,7 @@
 {
   "header": {
     "brand": "AI Collaboration Workspace",
-    "navigation": [
-      {
-        "label": "协作框架",
-        "target": "collaborationModes"
-      },
-      {
-        "label": "案例证据",
-        "target": "caseEvidence"
-      },
-      {
-        "label": "共同结论",
-        "target": "sharedPrinciple"
-      }
-    ],
+    "navigation": [],
     "languageSwitch": {
       "label": "英文",
       "locale": "en-US"
@@ -22,8 +9,8 @@
   },
   "hero": {
     "title": "AI Collaboration Workspace",
-    "coreValue": "不同任务，需要不同的 AI 协作方式。",
-    "supportingText": "根据任务的不确定性、重复性、主观性与决策风险，选择对话、Skill 或 Human Gate。",
+    "coreValue": "把能力交给 AI，把边界留给人。",
+    "supportingText": "不同任务，需要不同的 AI 协作方式。\n根据不确定性、重复性、主观性与决策风险，选择对话、Skill 或 Human Gate。",
     "workflow": {
       "taskNature": "任务性质",
       "paths": [
@@ -70,18 +57,12 @@
       "taskNature": "高不确定 · 方向仍在变化",
       "collaborationMode": "开放式对话",
       "name": "对话式原型探索",
-      "workflow": [
-        { "label": "想法", "type": "neutral" },
-        { "label": "提问", "type": "ai" },
-        { "label": "原型", "type": "ai" },
-        { "label": "反馈", "type": "human" },
-        { "label": "迭代", "type": "ai" }
-      ]
+      "workflow": []
     },
     "structured": {
       "number": "02",
       "modeLabel": "结构化模式",
-      "evidenceLabel": "案例证据",
+      "evidenceLabel": "",
       "taskNature": "稳定 · 可重复 · 标准明确",
       "collaborationMode": "可复用 Skill + Human Gate",
       "name": "Prototype-to-PRD"
@@ -89,7 +70,7 @@
     "creative": {
       "number": "03",
       "modeLabel": "创意模式",
-      "evidenceLabel": "案例证据",
+      "evidenceLabel": "",
       "taskNature": "主观输出 · 没有唯一正确答案",
       "collaborationMode": "结构化 Skill + 人工评估",
       "name": "Reference-to-Style"
@@ -101,7 +82,7 @@
       "kind": "mode",
       "eyebrow": "01 · 探索模式",
       "title": "对话式原型探索",
-      "introduction": "当问题仍在变化时，保持开放式 Conversation，而不是过早把假设固化成 Skill。",
+      "introduction": "在需求仍不稳定时，通过对话和可交互原型逐步收紧问题，而不是过早把尚未验证的规则固化成 Skill。",
       "problem": {
         "label": "问题",
         "text": "方向、约束与成功标准尚未稳定。"
@@ -109,13 +90,27 @@
       "method": {
         "label": "协作方式",
         "workflow": [
-          { "label": "想法", "type": "neutral" },
-          { "label": "提问", "type": "ai" },
-          { "label": "原型", "type": "ai" },
-          { "label": "反馈", "type": "human" },
-          { "label": "迭代", "type": "ai" }
+          { "label": "初始想法", "type": "neutral" },
+          { "label": "AI 提问", "type": "ai" },
+          { "label": "人做判断", "type": "human" },
+          { "label": "生成原型", "type": "ai" },
+          { "label": "实际体验", "type": "neutral" },
+          { "label": "反馈迭代", "type": "ai" }
         ],
-        "groups": []
+        "groups": [
+          {
+            "label": "AI",
+            "items": [
+              { "text": "提问、整理上下文、快速生成原型" }
+            ]
+          },
+          {
+            "label": "Human",
+            "items": [
+              { "text": "判断方向、确认取舍、决定何时收敛" }
+            ]
+          }
+        ]
       },
       "evidence": [],
       "result": {
@@ -126,20 +121,41 @@
     {
       "target": "prototype-to-prd",
       "kind": "case",
-      "eyebrow": "02 · 结构化模式 · 案例证据",
+      "eyebrow": "02 · 结构化模式",
       "title": "Prototype-to-PRD",
       "introduction": "",
       "problem": {
-        "label": "Goal",
+        "label": "目标",
         "text": "把原型中可观察的界面事实转化为开发规格，并把无法由现有证据唯一决定的产品语义交给 Human Gate。"
       },
       "method": {
         "label": "工作流",
         "workflow": [
-          { "label": "原型", "type": "neutral" },
-          { "label": "缺口识别", "type": "ai" },
-          { "label": "Human Gate", "type": "human" },
-          { "label": "PRD 转换", "type": "ai" }
+          {
+            "label": "原型读取",
+            "type": "neutral",
+            "substeps": ["页面与交互读取", "可观察事实提取"]
+          },
+          {
+            "label": "缺口识别",
+            "type": "ai",
+            "substeps": ["状态缺口", "权限与异常", "闭环检查"]
+          },
+          {
+            "label": "Human Gate",
+            "type": "human",
+            "substeps": ["产品语义歧义", "业务规则确认"]
+          },
+          {
+            "label": "PRD 转换",
+            "type": "ai",
+            "substeps": ["规格生成", "原型与 PRD 一致性检查"]
+          },
+          {
+            "label": "评审与验证",
+            "type": "neutral",
+            "substeps": ["异常闭环检查", "开发就绪检查", "历史项目回归"]
+          }
         ],
         "groups": []
       },
@@ -148,12 +164,12 @@
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
           "alt": "XML 双源比对工作台原型，包含来源、工作副本和加工完成入口",
-          "label": "Prototype Input",
+          "label": "原型输入",
           "title": "",
           "description": "",
           "groups": [
             {
-              "label": "From Prototype",
+              "label": "来自原型",
               "heading": "可直接观察",
               "items": [
                 "页面结构",
@@ -162,7 +178,7 @@
               ]
             },
             {
-              "label": "Not Uniquely Determined",
+              "label": "无法唯一确定",
               "heading": "无法仅凭原型确定",
               "items": [
                 "状态流转",
@@ -175,14 +191,14 @@
         }
       ],
       "result": {
-        "label": "Result",
+        "label": "结果",
       "text": "历史项目回归验证了这套“可观察事实 / 产品语义边界”可以复用。"
       }
     },
     {
       "target": "reference-to-style",
       "kind": "case",
-      "eyebrow": "03 · 创意模式 · 案例证据",
+      "eyebrow": "03 · 创意模式",
       "title": "Reference-to-Style",
       "introduction": "把开放式视觉生成中的失败，转化为可检查、可复用的生成规则。",
       "problem": {
@@ -196,10 +212,31 @@
       "method": {
         "label": "规则如何介入",
         "workflow": [
-          { "label": "失败", "type": "neutral" },
-          { "label": "特征压缩", "type": "ai" },
-          { "label": "视觉基元", "type": "ai" },
-          { "label": "人工评估", "type": "human" }
+          {
+            "label": "输入分析",
+            "type": "neutral",
+            "substeps": ["主体与互动识别", "空间事实提取"]
+          },
+          {
+            "label": "内容筛选",
+            "type": "ai",
+            "substeps": ["内容本质提取", "场景角色判断", "Inclusion Filter"]
+          },
+          {
+            "label": "特征压缩",
+            "type": "ai",
+            "substeps": ["Minimal Cue Plan", "关键身份线索保留", "非核心细节压缩"]
+          },
+          {
+            "label": "生成编译",
+            "type": "ai",
+            "substeps": ["Loose-Line Compiler", "语义线索 → 视觉原语", "Generation Spec Validator"]
+          },
+          {
+            "label": "评估",
+            "type": "human",
+            "substeps": ["QA", "Human Evaluation", "可选一次修正"]
+          }
         ],
         "groups": [
           {
@@ -226,7 +263,7 @@
           "kind": "source",
           "image": "assets/images/reference-to-style/original.jpg",
           "alt": "作为 Reference-to-Style 输入的一只长毛吉娃娃原始照片",
-          "label": "Source Photo",
+          "label": "原始照片",
           "title": "原始输入照片",
           "description": "提供主体身份、比例与关系线索。"
         },
@@ -234,7 +271,7 @@
           "kind": "early",
           "image": "assets/images/reference-to-style/02-failure-feature-compression.png",
           "alt": "简化后的结果仍然包含过多身体轮廓和局部特征",
-          "label": "Early Output",
+          "label": "早期输出",
           "title": "过度重建照片细节",
           "description": "模型仍然补全眼睛、毛发、轮廓等完整视觉信息，虽然更写实，但不符合目标 Style Profile。"
         },
@@ -248,13 +285,13 @@
           "kind": "result",
           "image": "assets/images/reference-to-style/03-intermediate-improvement.png",
           "alt": "规则调整后的中间生成结果，场景和局部细节已经减少",
-          "label": "Constrained Result",
+          "label": "受约束结果",
           "title": "用有限线索保留关键关系",
           "description": "减少非核心细节，同时保留主体识别与互动线索。"
         }
       ],
       "result": {
-        "label": "Result",
+        "label": "结果",
         "text": "规则约束生成边界，但 Human Evaluation 决定最终接受度。"
       }
     }

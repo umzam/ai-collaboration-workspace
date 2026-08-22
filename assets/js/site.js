@@ -24,15 +24,39 @@
     }
   };
 
-  const createWorkflowNode = ({ label, type }) => {
+  const createWorkflowNode = ({ label, type, substeps = [] }) => {
     const item = document.createElement("li");
     item.className = `workflow-node workflow-node--${type}`;
     item.dataset.type = type;
-    item.textContent = label;
+
+    const mainLabel = document.createElement("span");
+    mainLabel.className = "workflow-node-label";
+    mainLabel.textContent = label;
+    item.append(mainLabel);
+
+    if (substeps.length) {
+      item.classList.add("workflow-node--layered");
+
+      const substepList = document.createElement("ul");
+      substepList.className = "workflow-node-substeps";
+
+      substeps.forEach((substep) => {
+        const substepItem = document.createElement("li");
+        substepItem.textContent = substep;
+        substepList.append(substepItem);
+      });
+
+      item.append(substepList);
+    }
+
     return item;
   };
 
   const renderWorkflowNodes = (container, nodes) => {
+    container.classList.toggle(
+      "workflow--layered",
+      nodes.some((node) => node.substeps?.length)
+    );
     container.replaceChildren(...nodes.map(createWorkflowNode));
   };
 
@@ -53,18 +77,6 @@
 
   const renderHeader = (header) => {
     setText("#header-brand", header.brand);
-    renderLinks(getElement("#header-navigation"), header.navigation);
-
-    const modesNavigation = header.navigation.find(
-      (item) => item.target === "collaborationModes"
-    );
-
-    if (modesNavigation) {
-      getElement("#collaborationModes").setAttribute(
-        "aria-label",
-        modesNavigation.label
-      );
-    }
 
     const languageSwitch = getElement("#language-switch");
     languageSwitch.textContent = header.languageSwitch.label;
@@ -134,7 +146,11 @@
 
     const workflow = getElement('[data-field="workflow"]', laneElement);
 
-    if (workflow && lane.workflow) {
+    if (workflow) {
+      workflow.hidden = !lane.workflow?.length;
+    }
+
+    if (workflow && lane.workflow?.length) {
       renderWorkflowNodes(workflow, lane.workflow);
     }
 
@@ -143,7 +159,6 @@
   const renderCollaborationModes = (collaborationModes, footer) => {
     setText("#collaboration-modes-title", collaborationModes.title);
     setText("#collaboration-modes-introduction", collaborationModes.introduction);
-    setText("#case-evidence-heading", collaborationModes.structured.evidenceLabel);
 
     ["exploration", "structured", "creative"].forEach((key) => {
       renderLane(key, collaborationModes[key], footer);
@@ -264,7 +279,48 @@
     return container;
   };
 
+  const createSectionTransition = (target) => {
+    const transitionAssets = {
+      "exploration": {
+        kind: "stars",
+        src: "assets/images/transitions/star-trail-v4-wide.png"
+      },
+      "prototype-to-prd": {
+        kind: "staff",
+        src: "assets/images/transitions/music-staff-treble.svg"
+      },
+      "reference-to-style": {
+        kind: "stars-reverse",
+        src: "assets/images/transitions/star-trail-v4-wide.png"
+      }
+    };
+
+    const asset = transitionAssets[target];
+
+    if (!asset) {
+      return null;
+    }
+
+    const transition = document.createElement("div");
+    transition.className = `section-transition section-transition--${asset.kind}`;
+    transition.setAttribute("aria-hidden", "true");
+
+    const image = document.createElement("img");
+    image.src = asset.src;
+    image.alt = "";
+    image.loading = "lazy";
+    image.decoding = "async";
+
+    transition.append(image);
+    return transition;
+  };
+
   const createWorkspaceSection = (section) => {
+    const sectionButtonAssets = {
+      "exploration": "assets/images/transitions/button-01-cloud-cutout.png",
+      "prototype-to-prd": "assets/images/transitions/button-02-fish-cutout.png",
+      "reference-to-style": "assets/images/transitions/button-03-butterfly-cutout.png"
+    };
     const sectionElement = document.createElement("section");
     sectionElement.className = `workspace-section workspace-section--${section.kind}`;
     sectionElement.id = section.target;
@@ -272,7 +328,21 @@
     const header = document.createElement("header");
     const eyebrow = document.createElement("p");
     eyebrow.className = "workspace-section-eyebrow";
-    eyebrow.textContent = section.eyebrow;
+
+    const buttonAsset = sectionButtonAssets[section.target];
+
+    if (buttonAsset) {
+      const button = document.createElement("img");
+      button.className = "workspace-section-button";
+      button.src = buttonAsset;
+      button.alt = "";
+      button.setAttribute("aria-hidden", "true");
+      eyebrow.append(button);
+    }
+
+    const eyebrowText = document.createElement("span");
+    eyebrowText.textContent = section.eyebrow;
+    eyebrow.append(eyebrowText);
 
     const title = document.createElement("h2");
     title.id = `${section.target}-title`;
@@ -339,6 +409,12 @@
       createDetailBlock("workspace-result", section.result.label, section.result.text)
     );
 
+    const transition = createSectionTransition(section.target);
+
+    if (transition) {
+      sectionElement.append(transition);
+    }
+
     sectionElement.append(header, content);
     return sectionElement;
   };
@@ -358,8 +434,23 @@
 
   const renderPrincipleSpace = (selector, space) => {
     const container = getElement(selector);
+    const principleButtonAssets = {
+      "#ai-space": "assets/images/transitions/button-shared-structured-flower.png",
+      "#human-space": "assets/images/transitions/button-shared-creative-apple.png"
+    };
     setText('[data-field="heading"]', space.heading, container);
     setOptionalText('[data-field="description"]', space.description, container);
+
+    const buttonAsset = principleButtonAssets[selector];
+
+    if (buttonAsset) {
+      const button = document.createElement("img");
+      button.className = "principle-space-button";
+      button.src = buttonAsset;
+      button.alt = "";
+      button.setAttribute("aria-hidden", "true");
+      getElement('[data-field="heading"]', container).prepend(button);
+    }
 
     const verbs = space.verbs.map((verb) => {
       const item = document.createElement("li");

@@ -136,6 +136,6 @@
   "footer": {
     "label": "下一个案例",
     "linkLabel": "Reference-to-Style",
-    "target": "reference-to-style.html"
+    "target": "../index.html#reference-to-style"
   }
 }

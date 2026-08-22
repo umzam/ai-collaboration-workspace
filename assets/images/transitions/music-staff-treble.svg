@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 120" role="img" aria-label="Long, fine five-line staff with a treble clef and varied notes">
+  <defs>
+    <radialGradient id="wash" cx="50%" cy="50%" r="66%" gradientTransform="matrix(1 0 0 .55 0 .225)">
+      <stop offset="0" stop-color="#cae4f0" stop-opacity="0.4"/>
+      <stop offset="0.7" stop-color="#cae4f0" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#f0f7ff" stop-opacity="0"/>
+    </radialGradient>
+    <path id="star" d="M10 .6 12.8 6.4 19.2 7.1 14.5 11.5 15.8 18 10 14.8 4.2 18 5.5 11.5.8 7.1 7.2 6.4Z"/>
+    <g id="quarter"><ellipse rx="4.5" ry="3" transform="rotate(-14)"/><path d="M3.8-1V-20H5V-1Z"/></g>
+    <g id="eighth"><ellipse rx="4.5" ry="3" transform="rotate(-14)"/><path d="M3.8-1V-21H5V-1Z M5-21C13-19 14-14 9-10 10-15 7-16 5-16Z"/></g>
+    <g id="pair"><ellipse rx="4.5" ry="3" transform="rotate(-14)"/><ellipse cx="28" cy="-4" rx="4.5" ry="3" transform="rotate(-14 28 -4)"/><path d="M3.8-1V-22H5V-1Z M31.8-5V-26H33V-5Z M5-22 33-26 33-22 5-18Z"/></g>
+    <path id="rest" d="M0-15 5-11 1-5 6-1 2 6 4 7 9-2 5-6 9-12 2-18Z"/>
+  </defs>
+  <rect width="1600" height="120" fill="#f0f7ff"/>
+  <rect width="1600" height="120" fill="url(#wash)"/>
+  <g fill="none" stroke="#11273f" stroke-width="0.86" stroke-linecap="round" opacity="0.42">
+    <path d="M54 40 C225 37 361 44 524 40 S789 36 962 41 S1248 37 1492 42"/>
+    <path d="M54 47 C226 44 362 51 525 47 S790 43 963 48 S1270 44 1520 49"/>
+    <path d="M54 54 C227 51 363 58 526 54 S791 50 964 55 S1288 51 1540 56"/>
+    <path d="M54 61 C228 58 364 65 527 61 S792 57 965 62 S1274 58 1518 64"/>
+    <path d="M54 68 C229 65 365 72 528 68 S793 64 966 69 S1254 65 1495 73"/>
+  </g>
+  <text x="70" y="81" fill="#11273f" opacity="0.62" font-family="Bravura, 'Noto Music', 'Apple Symbols', serif" font-size="62">&#x1D11E;</text>
+  <g fill="#11273f" opacity="0.62">
+    <use href="#quarter" transform="translate(188 61)"/>
+    <use href="#pair" transform="translate(266 54)"/>
+    <use href="#eighth" transform="translate(360 69)"/>
+    <use href="#quarter" transform="translate(431 48)"/>
+    <use href="#pair" transform="translate(522 63)"/>
+    <use href="#rest" transform="translate(625 57)"/>
+    <use href="#eighth" transform="translate(691 45)"/>
+    <use href="#pair" transform="translate(786 59)"/>
+    <use href="#quarter" transform="translate(884 69)"/>
+    <use href="#eighth" transform="translate(952 51)"/>
+    <use href="#pair" transform="translate(1048 64)"/>
+    <use href="#rest" transform="translate(1152 54)"/>
+    <use href="#quarter" transform="translate(1220 46)"/>
+    <use href="#pair" transform="translate(1300 61)"/>
+    <use href="#eighth" transform="translate(1403 50)"/>
+  </g>
+  <g fill="#fff6c2" stroke="#11273f" stroke-width="0.55">
+    <use href="#star" x="1486" y="30" width="17" height="17"/>
+    <use href="#star" x="1514" y="39" width="14" height="14"/>
+    <use href="#star" x="1533" y="48" width="19" height="19"/>
+    <use href="#star" x="1511" y="58" width="13" height="13"/>
+    <use href="#star" x="1488" y="66" width="16" height="16"/>
+  </g>
+</svg>

@@ -1,20 +1,7 @@
 {
   "header": {
     "brand": "AI Collaboration Workspace",
-    "navigation": [
-      {
-        "label": "Framework",
-        "target": "collaborationModes"
-      },
-      {
-        "label": "Case Evidence",
-        "target": "caseEvidence"
-      },
-      {
-        "label": "Shared Learning",
-        "target": "sharedPrinciple"
-      }
-    ],
+    "navigation": [],
     "languageSwitch": {
       "label": "Chinese",
       "locale": "zh-CN"
@@ -22,8 +9,8 @@
   },
   "hero": {
     "title": "AI Collaboration Workspace",
-    "coreValue": "Different tasks require different AI collaboration methods.",
-    "supportingText": "I choose Conversation, Skill, or Human Gate based on uncertainty, repeatability, subjectivity, and decision risk.",
+    "coreValue": "AI executes. Humans set the boundary.",
+    "supportingText": "Different tasks require different AI collaboration methods.\nChoose Conversation, Skill, or Human Gate by uncertainty, repetition, subjectivity, and decision risk.",
     "workflow": {
       "taskNature": "TASK NATURE",
       "paths": [
@@ -70,18 +57,12 @@
       "taskNature": "High uncertainty · Direction still changing",
       "collaborationMode": "Open Conversation",
       "name": "Conversational Prototyping",
-      "workflow": [
-        { "label": "Idea", "type": "neutral" },
-        { "label": "Questions", "type": "ai" },
-        { "label": "Prototype", "type": "ai" },
-        { "label": "Feedback", "type": "human" },
-        { "label": "Iteration", "type": "ai" }
-      ]
+      "workflow": []
     },
     "structured": {
       "number": "02",
       "modeLabel": "STRUCTURED MODE",
-      "evidenceLabel": "CASE EVIDENCE",
+      "evidenceLabel": "",
       "taskNature": "Stable · Repeatable · Clear criteria",
       "collaborationMode": "Reusable Skill + Human Gate",
       "name": "Prototype-to-PRD"
@@ -89,7 +70,7 @@
     "creative": {
       "number": "03",
       "modeLabel": "CREATIVE MODE",
-      "evidenceLabel": "CASE EVIDENCE",
+      "evidenceLabel": "",
       "taskNature": "Subjective output · No single correct answer",
       "collaborationMode": "Structured Skill + Human Evaluation",
       "name": "Reference-to-Style"
@@ -101,7 +82,7 @@
       "kind": "mode",
       "eyebrow": "01 · EXPLORATION MODE",
       "title": "Conversational Prototyping",
-      "introduction": "When the problem is still changing, keep collaboration open instead of freezing assumptions into a Skill too early.",
+      "introduction": "While requirements remain unstable, use conversation and interactive prototypes to progressively narrow the problem instead of freezing unvalidated rules into a Skill too early.",
       "problem": {
         "label": "Problem",
         "text": "Direction, constraints, and success criteria are not yet stable."
@@ -109,13 +90,27 @@
       "method": {
         "label": "Collaboration Method",
         "workflow": [
-          { "label": "Idea", "type": "neutral" },
-          { "label": "Questions", "type": "ai" },
-          { "label": "Prototype", "type": "ai" },
-          { "label": "Feedback", "type": "human" },
-          { "label": "Iteration", "type": "ai" }
+          { "label": "Initial Idea", "type": "neutral" },
+          { "label": "AI Questions", "type": "ai" },
+          { "label": "Human Judgment", "type": "human" },
+          { "label": "Generate Prototype", "type": "ai" },
+          { "label": "Hands-on Experience", "type": "neutral" },
+          { "label": "Feedback Iteration", "type": "ai" }
         ],
-        "groups": []
+        "groups": [
+          {
+            "label": "AI",
+            "items": [
+              { "text": "Ask questions, organize context, and rapidly generate prototypes" }
+            ]
+          },
+          {
+            "label": "Human",
+            "items": [
+              { "text": "Set direction, confirm trade-offs, and decide when to converge" }
+            ]
+          }
+        ]
       },
       "evidence": [],
       "result": {
@@ -126,7 +121,7 @@
     {
       "target": "prototype-to-prd",
       "kind": "case",
-      "eyebrow": "02 · STRUCTURED MODE · CASE EVIDENCE",
+      "eyebrow": "02 · STRUCTURED MODE",
       "title": "Prototype-to-PRD",
       "introduction": "",
       "problem": {
@@ -136,10 +131,31 @@
       "method": {
         "label": "Workflow",
         "workflow": [
-          { "label": "Prototype", "type": "neutral" },
-          { "label": "Gap Detection", "type": "ai" },
-          { "label": "Human Gate", "type": "human" },
-          { "label": "PRD Transformation", "type": "ai" }
+          {
+            "label": "Prototype Reading",
+            "type": "neutral",
+            "substeps": ["Read pages and interactions", "Extract observable facts"]
+          },
+          {
+            "label": "Gap Detection",
+            "type": "ai",
+            "substeps": ["State gaps", "Permissions and exceptions", "Loop-closure check"]
+          },
+          {
+            "label": "Human Gate",
+            "type": "human",
+            "substeps": ["Product-semantic ambiguity", "Business-rule confirmation"]
+          },
+          {
+            "label": "PRD Transformation",
+            "type": "ai",
+            "substeps": ["Specification generation", "Prototype–PRD consistency check"]
+          },
+          {
+            "label": "Review and Validation",
+            "type": "neutral",
+            "substeps": ["Exception closure check", "Development-readiness check", "Historical project regression"]
+          }
         ],
         "groups": []
       },
@@ -182,7 +198,7 @@
     {
       "target": "reference-to-style",
       "kind": "case",
-      "eyebrow": "03 · CREATIVE MODE · CASE EVIDENCE",
+      "eyebrow": "03 · CREATIVE MODE",
       "title": "Reference-to-Style",
       "introduction": "Turn failures in open-ended visual generation into inspectable, reusable generation rules.",
       "problem": {
@@ -196,10 +212,31 @@
       "method": {
         "label": "How rules intervene",
         "workflow": [
-          { "label": "Failure", "type": "neutral" },
-          { "label": "Feature Compression", "type": "ai" },
-          { "label": "Visual Primitive", "type": "ai" },
-          { "label": "Human Evaluation", "type": "human" }
+          {
+            "label": "Input Analysis",
+            "type": "neutral",
+            "substeps": ["Identify subjects and interaction", "Extract spatial facts"]
+          },
+          {
+            "label": "Content Filtering",
+            "type": "ai",
+            "substeps": ["Extract content essence", "Determine scene roles", "Inclusion Filter"]
+          },
+          {
+            "label": "Feature Compression",
+            "type": "ai",
+            "substeps": ["Minimal Cue Plan", "Preserve key identity cues", "Compress non-essential detail"]
+          },
+          {
+            "label": "Generation Compilation",
+            "type": "ai",
+            "substeps": ["Loose-Line Compiler", "Semantic cues → visual primitives", "Generation Spec Validator"]
+          },
+          {
+            "label": "Evaluation",
+            "type": "human",
+            "substeps": ["QA", "Human Evaluation", "Optional single revision"]
+          }
         ],
         "groups": [
           {

@@ -12,15 +12,18 @@
     <header class="site-header" id="header">
       <a class="site-brand" id="header-brand" href="#hero"></a>
 
-      <nav class="site-navigation">
-        <ul id="header-navigation"></ul>
-      </nav>
-
       <button id="language-switch" type="button"></button>
     </header>
 
     <main>
       <section class="homepage-section hero" id="hero" aria-labelledby="hero-title">
+        <img
+          class="hero-star-cluster"
+          src="assets/images/transitions/hero-star-cluster.png"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        >
         <div class="hero-copy">
           <h1 id="hero-title"></h1>
           <p id="hero-core-value"></p>
@@ -73,12 +76,13 @@
 
       <div class="expanded-workspace" id="exploration-section"></div>
 
-      <section class="expanded-workspace" id="caseEvidence" aria-labelledby="case-evidence-heading">
-        <header class="case-evidence-overview">
-          <h2 class="workspace-section-eyebrow" id="case-evidence-heading"></h2>
-        </header>
+      <div class="expanded-workspace" id="caseEvidence">
         <div id="workspace-sections"></div>
-      </section>
+      </div>
+
+      <div class="section-transition section-transition--staff section-transition--bass" aria-hidden="true">
+        <img src="assets/images/transitions/music-staff-bass.svg" alt="" loading="lazy" decoding="async">
+      </div>
 
       <section class="homepage-section shared-principle" id="sharedPrinciple" aria-labelledby="shared-principle-title">
         <header>

@@ -136,6 +136,6 @@
   "footer": {
     "label": "Next case",
     "linkLabel": "Reference-to-Style",
-    "target": "reference-to-style.html"
+    "target": "../index.html#reference-to-style"
   }
 }

@@ -151,6 +151,6 @@
   "footer": {
     "label": "Previous case",
     "linkLabel": "Prototype-to-PRD",
-    "target": "prototype-to-prd.html"
+    "target": "../index.html#prototype-to-prd"
   }
 }

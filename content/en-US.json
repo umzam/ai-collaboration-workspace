@@ -1,0 +1,309 @@
+{
+  "header": {
+    "brand": "AI Collaboration Workspace",
+    "navigation": [
+      {
+        "label": "Framework",
+        "target": "collaborationModes"
+      },
+      {
+        "label": "Case Evidence",
+        "target": "caseEvidence"
+      },
+      {
+        "label": "Shared Learning",
+        "target": "sharedPrinciple"
+      }
+    ],
+    "languageSwitch": {
+      "label": "Chinese",
+      "locale": "zh-CN"
+    }
+  },
+  "hero": {
+    "title": "AI Collaboration Workspace",
+    "coreValue": "Different tasks require different AI collaboration methods.",
+    "supportingText": "I choose Conversation, Skill, or Human Gate based on uncertainty, repeatability, subjectivity, and decision risk.",
+    "workflow": {
+      "taskNature": "TASK NATURE",
+      "paths": [
+        {
+          "label": "High uncertainty",
+          "type": "neutral"
+        },
+        {
+          "label": "Stable and repeatable",
+          "type": "neutral"
+        },
+        {
+          "label": "Subjective output",
+          "type": "neutral"
+        }
+      ],
+      "collaborationModes": [
+        {
+          "label": "Conversation",
+          "type": "ai"
+        },
+        {
+          "label": "Skill",
+          "type": "ai"
+        },
+        {
+          "label": "Skill + Human Evaluation",
+          "type": "human"
+        }
+      ],
+      "humanGate": {
+        "label": "HUMAN GATE",
+        "text": "When evidence cannot support a unique decision."
+      }
+    }
+  },
+  "collaborationModes": {
+    "title": "Collaboration Modes Overview",
+    "introduction": "Different task natures require different AI collaboration methods.",
+    "exploration": {
+      "number": "01",
+      "modeLabel": "EXPLORATION MODE",
+      "evidenceLabel": "",
+      "taskNature": "High uncertainty · Direction still changing",
+      "collaborationMode": "Open Conversation",
+      "name": "Conversational Prototyping",
+      "workflow": [
+        { "label": "Idea", "type": "neutral" },
+        { "label": "Questions", "type": "ai" },
+        { "label": "Prototype", "type": "ai" },
+        { "label": "Feedback", "type": "human" },
+        { "label": "Iteration", "type": "ai" }
+      ]
+    },
+    "structured": {
+      "number": "02",
+      "modeLabel": "STRUCTURED MODE",
+      "evidenceLabel": "CASE EVIDENCE",
+      "taskNature": "Stable · Repeatable · Clear criteria",
+      "collaborationMode": "Reusable Skill + Human Gate",
+      "name": "Prototype-to-PRD"
+    },
+    "creative": {
+      "number": "03",
+      "modeLabel": "CREATIVE MODE",
+      "evidenceLabel": "CASE EVIDENCE",
+      "taskNature": "Subjective output · No single correct answer",
+      "collaborationMode": "Structured Skill + Human Evaluation",
+      "name": "Reference-to-Style"
+    }
+  },
+  "expandedSections": [
+    {
+      "target": "exploration",
+      "kind": "mode",
+      "eyebrow": "01 · EXPLORATION MODE",
+      "title": "Conversational Prototyping",
+      "introduction": "When the problem is still changing, keep collaboration open instead of freezing assumptions into a Skill too early.",
+      "problem": {
+        "label": "Problem",
+        "text": "Direction, constraints, and success criteria are not yet stable."
+      },
+      "method": {
+        "label": "Collaboration Method",
+        "workflow": [
+          { "label": "Idea", "type": "neutral" },
+          { "label": "Questions", "type": "ai" },
+          { "label": "Prototype", "type": "ai" },
+          { "label": "Feedback", "type": "human" },
+          { "label": "Iteration", "type": "ai" }
+        ],
+        "groups": []
+      },
+      "evidence": [],
+      "result": {
+        "label": "Result",
+        "text": "A vague idea becomes a product direction that can be experienced and judged."
+      }
+    },
+    {
+      "target": "prototype-to-prd",
+      "kind": "case",
+      "eyebrow": "02 · STRUCTURED MODE · CASE EVIDENCE",
+      "title": "Prototype-to-PRD",
+      "introduction": "",
+      "problem": {
+        "label": "Goal",
+        "text": "Transform observable interface facts from a prototype into development specifications, and send product semantics that existing evidence cannot uniquely determine to the Human Gate."
+      },
+      "method": {
+        "label": "Workflow",
+        "workflow": [
+          { "label": "Prototype", "type": "neutral" },
+          { "label": "Gap Detection", "type": "ai" },
+          { "label": "Human Gate", "type": "human" },
+          { "label": "PRD Transformation", "type": "ai" }
+        ],
+        "groups": []
+      },
+      "evidence": [
+        {
+          "kind": "prototype-input",
+          "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
+          "alt": "XML dual-source comparison prototype with sources, working copy, and completion control",
+          "label": "Prototype Input",
+          "title": "",
+          "description": "",
+          "groups": [
+            {
+              "label": "From Prototype",
+              "heading": "Directly observable",
+              "items": [
+                "Page structure",
+                "User actions",
+                "Navigation relationships"
+              ]
+            },
+            {
+              "label": "Not Uniquely Determined",
+              "heading": "Not determined by the prototype alone",
+              "items": [
+                "State transitions",
+                "Permissions",
+                "Exception recovery",
+                "Success boundaries"
+              ]
+            }
+          ]
+        }
+      ],
+      "result": {
+        "label": "Result",
+      "text": "Historical project regression validated that the observable-facts / product-semantics boundary is reusable."
+      }
+    },
+    {
+      "target": "reference-to-style",
+      "kind": "case",
+      "eyebrow": "03 · CREATIVE MODE · CASE EVIDENCE",
+      "title": "Reference-to-Style",
+      "introduction": "Turn failures in open-ended visual generation into inspectable, reusable generation rules.",
+      "problem": {
+        "label": "What failed",
+        "text": "Open-ended style generation tends to preserve too much non-essential information."
+      },
+      "goal": {
+        "label": "Why this goal",
+        "text": "The goal is not to reproduce the photo as faithfully as possible. It is to rebuild a fixed loose-line style with the fewest visual cues that still preserve subject identity and the key interaction."
+      },
+      "method": {
+        "label": "How rules intervene",
+        "workflow": [
+          { "label": "Failure", "type": "neutral" },
+          { "label": "Feature Compression", "type": "ai" },
+          { "label": "Visual Primitive", "type": "ai" },
+          { "label": "Human Evaluation", "type": "human" }
+        ],
+        "groups": [
+          {
+            "label": "Failure Diagnosis",
+            "items": [
+              {
+                "title": "Content admission failed",
+                "text": "Non-essential information entered the final image."
+              },
+              {
+                "title": "Feature compression was insufficient",
+                "text": "The result retained too much subject structure."
+              },
+              {
+                "title": "Visual elements were unconstrained",
+                "text": "Open language continued to trigger reconstruction."
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "kind": "source",
+          "image": "assets/images/reference-to-style/original.jpg",
+          "alt": "Original photo of a long-haired Chihuahua used as the Reference-to-Style input",
+          "label": "Source Photo",
+          "title": "Original input photo",
+          "description": "Provides subject identity, proportion, and relationship cues."
+        },
+        {
+          "kind": "early",
+          "image": "assets/images/reference-to-style/02-failure-feature-compression.png",
+          "alt": "Simplified result still containing excessive body contours and local features",
+          "label": "Early Output",
+          "title": "Photo detail was over-reconstructed",
+          "description": "The model still completed eyes, fur, contours, and other full visual information. It looked more realistic, but did not match the target Style Profile."
+        },
+        {
+          "kind": "rule",
+          "label": "Product Rule",
+          "title": "Feature Compression + Visual Primitive",
+          "description": "Do not repeatedly subtract from a complete photo; reconstruct from the essential identity and relationship cues."
+        },
+        {
+          "kind": "result",
+          "image": "assets/images/reference-to-style/03-intermediate-improvement.png",
+          "alt": "Intermediate generated result with reduced scene content and local detail",
+          "label": "Constrained Result",
+          "title": "Limited cues preserve the key relationship",
+          "description": "Reduce non-essential detail while retaining subject recognition and interaction cues."
+        }
+      ],
+      "result": {
+        "label": "Result",
+        "text": "Rules constrain the generation boundary, but Human Evaluation decides final acceptance."
+      }
+    }
+  ],
+  "sharedPrinciple": {
+    "title": "A Shared Judgment Pattern",
+    "introduction": "The Human Gate appears at different points in each task. In both cases, people take over only when the available evidence cannot determine a unique answer.",
+    "aiSpace": {
+      "heading": "Structured Task · Prototype-to-PRD",
+      "verbs": [
+        "Prototype facts",
+        "Specification gaps",
+        "Semantic decisions"
+      ],
+      "description": "AI extracts observable facts and identifies missing rules. The Human Gate confirms states, permissions, exceptions, and success boundaries."
+    },
+    "humanSpace": {
+      "heading": "Creative Task · Reference-to-Style",
+      "verbs": [
+        "Generation failure",
+        "Rule constraints",
+        "Acceptance judgment"
+      ],
+      "description": "AI turns failure into Feature Compression and Visual Primitive rules. Human Evaluation decides whether the result preserves the right identity and relationship."
+    },
+    "humanGate": {
+      "label": "SHARED JUDGMENT BOUNDARY",
+      "text": "When evidence or rules cannot support a unique answer, AI stops inferring and a person takes over the decision."
+    },
+    "closingPrinciple": "The collaboration boundary is not defined by whether AI can generate an answer, but by whether the available evidence can justify a unique judgment."
+  },
+  "footer": {
+    "brand": "AI Collaboration Workspace",
+    "collaborationModeLinks": [
+      {
+        "label": "Conversational Prototyping",
+        "target": "exploration"
+      }
+    ],
+    "caseStudyLinks": [
+      {
+        "label": "Prototype-to-PRD",
+        "target": "prototype-to-prd"
+      },
+      {
+        "label": "Reference-to-Style",
+        "target": "reference-to-style"
+      }
+    ],
+    "closingStatement": "Design the right boundary between AI capability and human judgment."
+  }
+}

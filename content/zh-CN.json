@@ -1,0 +1,309 @@
+{
+  "header": {
+    "brand": "AI Collaboration Workspace",
+    "navigation": [
+      {
+        "label": "协作框架",
+        "target": "collaborationModes"
+      },
+      {
+        "label": "案例证据",
+        "target": "caseEvidence"
+      },
+      {
+        "label": "共同结论",
+        "target": "sharedPrinciple"
+      }
+    ],
+    "languageSwitch": {
+      "label": "英文",
+      "locale": "en-US"
+    }
+  },
+  "hero": {
+    "title": "AI Collaboration Workspace",
+    "coreValue": "不同任务，需要不同的 AI 协作方式。",
+    "supportingText": "根据任务的不确定性、重复性、主观性与决策风险，选择对话、Skill 或 Human Gate。",
+    "workflow": {
+      "taskNature": "任务性质",
+      "paths": [
+        {
+          "label": "高不确定",
+          "type": "neutral"
+        },
+        {
+          "label": "稳定且可重复",
+          "type": "neutral"
+        },
+        {
+          "label": "主观输出",
+          "type": "neutral"
+        }
+      ],
+      "collaborationModes": [
+        {
+          "label": "开放式对话",
+          "type": "ai"
+        },
+        {
+          "label": "Skill",
+          "type": "ai"
+        },
+        {
+          "label": "Skill + 人工评估",
+          "type": "human"
+        }
+      ],
+      "humanGate": {
+        "label": "Human Gate",
+        "text": "当现有证据无法支持唯一决定。"
+      }
+    }
+  },
+  "collaborationModes": {
+    "title": "AI 协作模式总览",
+    "introduction": "不同任务性质，需要不同的 AI 协作方式。",
+    "exploration": {
+      "number": "01",
+      "modeLabel": "探索模式",
+      "evidenceLabel": "",
+      "taskNature": "高不确定 · 方向仍在变化",
+      "collaborationMode": "开放式对话",
+      "name": "对话式原型探索",
+      "workflow": [
+        { "label": "想法", "type": "neutral" },
+        { "label": "提问", "type": "ai" },
+        { "label": "原型", "type": "ai" },
+        { "label": "反馈", "type": "human" },
+        { "label": "迭代", "type": "ai" }
+      ]
+    },
+    "structured": {
+      "number": "02",
+      "modeLabel": "结构化模式",
+      "evidenceLabel": "案例证据",
+      "taskNature": "稳定 · 可重复 · 标准明确",
+      "collaborationMode": "可复用 Skill + Human Gate",
+      "name": "Prototype-to-PRD"
+    },
+    "creative": {
+      "number": "03",
+      "modeLabel": "创意模式",
+      "evidenceLabel": "案例证据",
+      "taskNature": "主观输出 · 没有唯一正确答案",
+      "collaborationMode": "结构化 Skill + 人工评估",
+      "name": "Reference-to-Style"
+    }
+  },
+  "expandedSections": [
+    {
+      "target": "exploration",
+      "kind": "mode",
+      "eyebrow": "01 · 探索模式",
+      "title": "对话式原型探索",
+      "introduction": "当问题仍在变化时，保持开放式 Conversation，而不是过早把假设固化成 Skill。",
+      "problem": {
+        "label": "问题",
+        "text": "方向、约束与成功标准尚未稳定。"
+      },
+      "method": {
+        "label": "协作方式",
+        "workflow": [
+          { "label": "想法", "type": "neutral" },
+          { "label": "提问", "type": "ai" },
+          { "label": "原型", "type": "ai" },
+          { "label": "反馈", "type": "human" },
+          { "label": "迭代", "type": "ai" }
+        ],
+        "groups": []
+      },
+      "evidence": [],
+      "result": {
+        "label": "结果",
+        "text": "将模糊想法收敛为可体验、可继续判断的产品方向。"
+      }
+    },
+    {
+      "target": "prototype-to-prd",
+      "kind": "case",
+      "eyebrow": "02 · 结构化模式 · 案例证据",
+      "title": "Prototype-to-PRD",
+      "introduction": "",
+      "problem": {
+        "label": "Goal",
+        "text": "把原型中可观察的界面事实转化为开发规格，并把无法由现有证据唯一决定的产品语义交给 Human Gate。"
+      },
+      "method": {
+        "label": "工作流",
+        "workflow": [
+          { "label": "原型", "type": "neutral" },
+          { "label": "缺口识别", "type": "ai" },
+          { "label": "Human Gate", "type": "human" },
+          { "label": "PRD 转换", "type": "ai" }
+        ],
+        "groups": []
+      },
+      "evidence": [
+        {
+          "kind": "prototype-input",
+          "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
+          "alt": "XML 双源比对工作台原型，包含来源、工作副本和加工完成入口",
+          "label": "Prototype Input",
+          "title": "",
+          "description": "",
+          "groups": [
+            {
+              "label": "From Prototype",
+              "heading": "可直接观察",
+              "items": [
+                "页面结构",
+                "用户操作",
+                "跳转关系"
+              ]
+            },
+            {
+              "label": "Not Uniquely Determined",
+              "heading": "无法仅凭原型确定",
+              "items": [
+                "状态流转",
+                "权限",
+                "异常恢复",
+                "成功边界"
+              ]
+            }
+          ]
+        }
+      ],
+      "result": {
+        "label": "Result",
+      "text": "历史项目回归验证了这套“可观察事实 / 产品语义边界”可以复用。"
+      }
+    },
+    {
+      "target": "reference-to-style",
+      "kind": "case",
+      "eyebrow": "03 · 创意模式 · 案例证据",
+      "title": "Reference-to-Style",
+      "introduction": "把开放式视觉生成中的失败，转化为可检查、可复用的生成规则。",
+      "problem": {
+        "label": "失败表现",
+        "text": "开放式风格生成容易保留过多非核心信息。"
+      },
+      "goal": {
+        "label": "生成目标",
+        "text": "目标不是尽可能还原照片，而是在保留主体身份与关键互动关系的前提下，用尽可能少的视觉线索重建固定的 loose-line 风格。"
+      },
+      "method": {
+        "label": "规则如何介入",
+        "workflow": [
+          { "label": "失败", "type": "neutral" },
+          { "label": "特征压缩", "type": "ai" },
+          { "label": "视觉基元", "type": "ai" },
+          { "label": "人工评估", "type": "human" }
+        ],
+        "groups": [
+          {
+            "label": "失败诊断",
+            "items": [
+              {
+                "title": "内容准入失败",
+                "text": "非核心信息进入最终画面。"
+              },
+              {
+                "title": "特征压缩不足",
+                "text": "结果仍保留过多主体结构。"
+              },
+              {
+                "title": "视觉元素无法约束",
+                "text": "开放式语言继续触发额外重建。"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "kind": "source",
+          "image": "assets/images/reference-to-style/original.jpg",
+          "alt": "作为 Reference-to-Style 输入的一只长毛吉娃娃原始照片",
+          "label": "Source Photo",
+          "title": "原始输入照片",
+          "description": "提供主体身份、比例与关系线索。"
+        },
+        {
+          "kind": "early",
+          "image": "assets/images/reference-to-style/02-failure-feature-compression.png",
+          "alt": "简化后的结果仍然包含过多身体轮廓和局部特征",
+          "label": "Early Output",
+          "title": "过度重建照片细节",
+          "description": "模型仍然补全眼睛、毛发、轮廓等完整视觉信息，虽然更写实，但不符合目标 Style Profile。"
+        },
+        {
+          "kind": "rule",
+          "label": "生成规则",
+          "title": "Feature Compression + Visual Primitive",
+          "description": "不是从完整照片不断删减，而是从关键身份与关系线索重新构建。"
+        },
+        {
+          "kind": "result",
+          "image": "assets/images/reference-to-style/03-intermediate-improvement.png",
+          "alt": "规则调整后的中间生成结果，场景和局部细节已经减少",
+          "label": "Constrained Result",
+          "title": "用有限线索保留关键关系",
+          "description": "减少非核心细节，同时保留主体识别与互动线索。"
+        }
+      ],
+      "result": {
+        "label": "Result",
+        "text": "规则约束生成边界，但 Human Evaluation 决定最终接受度。"
+      }
+    }
+  ],
+  "sharedPrinciple": {
+    "title": "两个案例共享的判断模式",
+    "introduction": "任务不同，Human Gate 介入的位置也不同；共同点是，人只接管现有证据无法唯一决定的判断。",
+    "aiSpace": {
+      "heading": "结构化任务 · Prototype-to-PRD",
+      "verbs": [
+        "原型事实",
+        "规格缺口",
+        "语义确认"
+      ],
+      "description": "AI 从原型提取可观察事实并识别缺失规则；状态、权限、异常与成功边界由 Human Gate 确认。"
+    },
+    "humanSpace": {
+      "heading": "创意任务 · Reference-to-Style",
+      "verbs": [
+        "生成失败",
+        "规则约束",
+        "接受度判断"
+      ],
+      "description": "AI 把失败转化为特征压缩与视觉基元规则；结果是否保留正确的身份与关系，由 Human Evaluation 判断。"
+    },
+    "humanGate": {
+      "label": "共同判断边界",
+      "text": "当证据或规则不能支持唯一答案时，AI 停止推断，人接管决定。"
+    },
+    "closingPrinciple": "协作边界不取决于 AI 能不能生成，而取决于现有证据能不能支持唯一判断。"
+  },
+  "footer": {
+    "brand": "AI Collaboration Workspace",
+    "collaborationModeLinks": [
+      {
+        "label": "对话式原型探索",
+        "target": "exploration"
+      }
+    ],
+    "caseStudyLinks": [
+      {
+        "label": "Prototype-to-PRD",
+        "target": "prototype-to-prd"
+      },
+      {
+        "label": "Reference-to-Style",
+        "target": "reference-to-style"
+      }
+    ],
+    "closingStatement": "设计 AI 能力与人类判断之间合适的边界。"
+  }
+}

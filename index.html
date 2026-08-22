@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title></title>
+    <link rel="stylesheet" href="assets/css/site.css">
+    <script src="assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header" id="header">
+      <a class="site-brand" id="header-brand" href="#hero"></a>
+
+      <nav class="site-navigation">
+        <ul id="header-navigation"></ul>
+      </nav>
+
+      <button id="language-switch" type="button"></button>
+    </header>
+
+    <main>
+      <section class="homepage-section hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title"></h1>
+          <p id="hero-core-value"></p>
+          <p id="hero-supporting-text"></p>
+        </div>
+
+        <div class="hero-workflow" id="hero-workflow">
+          <p id="hero-task-nature"></p>
+          <div id="hero-workflow-paths"></div>
+          <aside id="hero-human-gate">
+            <p id="hero-human-gate-label"></p>
+            <p id="hero-human-gate-text"></p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="homepage-section collaboration-modes" id="collaborationModes" aria-labelledby="collaboration-modes-title">
+        <header class="collaboration-modes-header">
+          <h2 id="collaboration-modes-title"></h2>
+          <p id="collaboration-modes-introduction"></p>
+        </header>
+
+        <div class="collaboration-lanes" id="collaboration-lanes">
+          <article class="collaboration-lane" data-lane="exploration">
+            <p data-field="number"></p>
+            <p data-field="modeLabel"></p>
+            <p data-field="taskNature"></p>
+            <p data-field="collaborationMode"></p>
+            <h3 data-field="name"></h3>
+            <ol data-field="workflow"></ol>
+          </article>
+
+          <article class="collaboration-lane" data-lane="structured">
+            <p data-field="number"></p>
+            <p data-field="modeLabel"></p>
+            <p data-field="taskNature"></p>
+            <p data-field="collaborationMode"></p>
+            <h3 data-field="name"></h3>
+          </article>
+
+          <article class="collaboration-lane" data-lane="creative">
+            <p data-field="number"></p>
+            <p data-field="modeLabel"></p>
+            <p data-field="taskNature"></p>
+            <p data-field="collaborationMode"></p>
+            <h3 data-field="name"></h3>
+          </article>
+        </div>
+      </section>
+
+      <div class="expanded-workspace" id="exploration-section"></div>
+
+      <section class="expanded-workspace" id="caseEvidence" aria-labelledby="case-evidence-heading">
+        <header class="case-evidence-overview">
+          <h2 class="workspace-section-eyebrow" id="case-evidence-heading"></h2>
+        </header>
+        <div id="workspace-sections"></div>
+      </section>
+
+      <section class="homepage-section shared-principle" id="sharedPrinciple" aria-labelledby="shared-principle-title">
+        <header>
+          <h2 id="shared-principle-title"></h2>
+          <p id="shared-principle-introduction"></p>
+        </header>
+
+        <div class="principle-spaces">
+          <article id="ai-space">
+            <h3 data-field="heading"></h3>
+            <ul data-field="verbs"></ul>
+            <p data-field="description"></p>
+          </article>
+
+          <aside id="principle-human-gate">
+            <p data-field="label"></p>
+            <p data-field="text"></p>
+          </aside>
+
+          <article id="human-space">
+            <h3 data-field="heading"></h3>
+            <ul data-field="verbs"></ul>
+            <p data-field="description"></p>
+          </article>
+        </div>
+
+        <p id="closing-principle"></p>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="footer">
+      <p id="footer-brand"></p>
+      <nav>
+        <ul id="footer-mode-links"></ul>
+      </nav>
+      <nav>
+        <ul id="footer-case-links"></ul>
+      </nav>
+      <p id="footer-closing-statement"></p>
+    </footer>
+  </body>
+</html>

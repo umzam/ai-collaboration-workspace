@@ -129,7 +129,7 @@
         "text": "把原型中可观察的界面事实转化为开发规格，并把无法由现有证据唯一决定的产品语义交给 Human Gate。"
       },
       "method": {
-        "label": "工作流",
+        "label": "内部执行流程",
         "workflow": [
           {
             "label": "原型读取",
@@ -190,9 +190,47 @@
           ]
         }
       ],
+      "architecture": {
+        "label": "从原型证据到三层规则",
+        "introduction": "Skill 由 Core Skill、Company Rules 和 Platform Rules 三部分组成；三者分开维护，避免把历史项目答案固化进通用 Skill。",
+        "layers": [
+          {
+            "number": "01",
+            "role": "core",
+            "name": "Core Skill",
+            "responsibility": "证据读取、缺口识别与唯一性判断",
+            "condition": "每次运行"
+          },
+          {
+            "number": "02",
+            "role": "company",
+            "name": "Company Rules",
+            "responsibility": "PRD 结构、表达颗粒度、批注与文档规范",
+            "condition": "输出公司格式 PRD 时"
+          },
+          {
+            "number": "03",
+            "role": "platform",
+            "name": "Platform Rules",
+            "responsibility": "已确认的平台状态、权限与行为不变量",
+            "condition": "适用对象与范围明确时"
+          }
+        ],
+        "routing": {
+          "decision": "唯一性判断",
+          "determined": "现有证据或适用规则可以唯一确定",
+          "undetermined": "无法唯一确定",
+          "confirmed": "确认后的规格",
+          "output": "PRD"
+        },
+        "boundary": {
+          "label": "无法唯一确定 → Human Gate",
+          "text": "证据无法唯一确定的业务语义不进入 Skill 默认规则，由人决策并保留在具体项目中。"
+        }
+      },
       "result": {
         "label": "结果",
-      "text": "历史项目回归验证了这套“可观察事实 / 产品语义边界”可以复用。"
+        "text": "两个真实需求的历史回归验证了三层结构：通用判断方法可以复用，公司与平台规则可以独立更新，具体项目答案不会被固化为默认规则。"
       }
     },
     {

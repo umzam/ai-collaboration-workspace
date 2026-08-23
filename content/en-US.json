@@ -129,7 +129,7 @@
         "text": "Transform observable interface facts from a prototype into development specifications, and send product semantics that existing evidence cannot uniquely determine to the Human Gate."
       },
       "method": {
-        "label": "Workflow",
+        "label": "Runtime Workflow",
         "workflow": [
           {
             "label": "Prototype Reading",
@@ -190,9 +190,47 @@
           ]
         }
       ],
+      "architecture": {
+        "label": "From Prototype Evidence to Layered Rules",
+        "introduction": "The Skill has three separately maintained parts: Core Skill, Company Rules, and Platform Rules. This prevents historical project answers from becoming defaults in the general Skill.",
+        "layers": [
+          {
+            "number": "01",
+            "role": "core",
+            "name": "Core Skill",
+            "responsibility": "Evidence reading, gap detection, and uniqueness testing",
+            "condition": "Every run"
+          },
+          {
+            "number": "02",
+            "role": "company",
+            "name": "Company Rules",
+            "responsibility": "PRD structure, specification granularity, annotations, and documentation standards",
+            "condition": "When producing a company-format PRD"
+          },
+          {
+            "number": "03",
+            "role": "platform",
+            "name": "Platform Rules",
+            "responsibility": "Confirmed platform states, permissions, and behavioral invariants",
+            "condition": "Only when object and scope apply"
+          }
+        ],
+        "routing": {
+          "decision": "Uniqueness Test",
+          "determined": "Existing evidence or an applicable rule determines a unique answer",
+          "undetermined": "Not Uniquely Determined",
+          "confirmed": "Confirmed Specification",
+          "output": "PRD"
+        },
+        "boundary": {
+          "label": "Not Uniquely Determined → Human Gate",
+          "text": "Business semantics that evidence cannot uniquely determine stay out of Skill defaults; people decide them and keep them within the specific project."
+        }
+      },
       "result": {
         "label": "Result",
-      "text": "Historical project regression validated that the observable-facts / product-semantics boundary is reusable."
+        "text": "Historical regression across two real requirements validated the three-layer structure: reusable judgment methods remain stable, company and platform rules can evolve independently, and project-specific answers do not become defaults."
       }
     },
     {

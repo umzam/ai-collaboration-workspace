@@ -665,6 +665,186 @@ button {
   border-left: 0.1875rem solid var(--ink);
 }
 
+.workspace-architecture {
+  min-width: 0;
+  padding-left: clamp(1rem, 2vw, 1.75rem);
+  border-left: 1px solid var(--divider);
+}
+
+.workspace-architecture-introduction {
+  max-width: none;
+  margin-bottom: 1rem;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.5;
+}
+
+.workspace-architecture-map {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.workspace-architecture-layers {
+  border-block: 1px solid var(--divider);
+}
+
+.workspace-architecture-layer {
+  display: grid;
+  grid-template-columns: 2rem minmax(6.5rem, 0.34fr) minmax(0, 1fr) minmax(8rem, auto);
+  gap: 0.625rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.625rem 0;
+}
+
+.workspace-architecture-layer + .workspace-architecture-layer {
+  border-top: 1px solid var(--divider);
+}
+
+.workspace-architecture-layer-number {
+  color: var(--soft-ink);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+}
+
+.workspace-architecture-condition {
+  color: var(--soft-ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+}
+
+.workspace-architecture-layer h3,
+.workspace-architecture-layer p {
+  margin-bottom: 0;
+}
+
+.workspace-architecture-layer h3 {
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.workspace-architecture-responsibility {
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.workspace-architecture-condition {
+  justify-self: end;
+  margin-top: 0;
+  text-align: right;
+}
+
+.workspace-architecture-main-path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  gap: 0.625rem;
+  align-items: center;
+  min-width: 0;
+  padding-top: 0.25rem;
+}
+
+.workspace-architecture-main-path .workspace-architecture-connector,
+.workspace-architecture-output-path .workspace-architecture-connector {
+  justify-self: center;
+}
+
+.workspace-architecture-connector {
+  color: var(--soft-ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.workspace-architecture-routing-node {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.workspace-architecture-routing-node--confirmed {
+  color: var(--muted-ink);
+}
+
+.workspace-architecture-routing-node--source,
+.workspace-architecture-routing-node--decision {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid rgba(17, 39, 63, 0.28);
+}
+
+.workspace-architecture-branches {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-block: 1px solid var(--divider);
+}
+
+.workspace-architecture-branch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  gap: 0.625rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.625rem 0;
+}
+
+.workspace-architecture-branch > .workspace-architecture-connector {
+  transform: translateX(0.5rem);
+}
+
+.workspace-architecture-branch + .workspace-architecture-branch {
+  border-top: 1px solid var(--divider);
+}
+
+.workspace-architecture-routing-node--determined {
+  text-align: left;
+}
+
+.workspace-architecture-output-path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  gap: 0.625rem;
+  align-items: center;
+  min-width: 0;
+  padding-top: 0.125rem;
+}
+
+.workspace-architecture-routing-node--company,
+.workspace-architecture-routing-node--output {
+  padding: 0.375rem 0.5rem;
+  background: var(--ai);
+  border-radius: 0.25rem;
+}
+
+.workspace-architecture-routing-node--output {
+  width: 100%;
+}
+
+.workspace-architecture-boundary {
+  margin: 0;
+  padding: 0;
+}
+
+.workspace-architecture-boundary p {
+  margin-bottom: 0;
+}
+
+.workspace-architecture-boundary > p:last-child {
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
 .workspace-section--mode .workspace-section-content {
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   grid-template-areas:
@@ -892,17 +1072,30 @@ button {
   grid-template-columns: 1fr;
   grid-template-areas:
     "problem"
-    "evidence"
+    "routing"
     "method"
     "result";
   gap: 0.875rem;
 }
 
-#prototype-to-prd .workspace-evidence {
+#prototype-to-prd .workspace-evidence-routing {
+  grid-area: routing;
   display: grid;
-  grid-template-columns: minmax(12rem, 0.75fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(15rem, 0.6fr) minmax(0, 1.4fr);
   gap: clamp(1rem, 2vw, 1.75rem);
   align-items: start;
+  min-width: 0;
+  padding-block: 0.875rem;
+  border-block: 1px solid var(--divider);
+}
+
+#prototype-to-prd .workspace-evidence-routing > .workspace-evidence-group,
+#prototype-to-prd .workspace-evidence-routing > .workspace-architecture {
+  grid-area: auto;
+}
+
+#prototype-to-prd .workspace-evidence {
+  display: block;
   overflow: visible;
   max-width: none;
   border: 0;
@@ -911,14 +1104,24 @@ button {
 
 #prototype-to-prd .workspace-evidence img {
   width: 100%;
+  height: auto;
   max-width: none;
-  max-height: 12rem;
+  max-height: none;
   border: 1px solid var(--divider);
-  object-fit: contain;
 }
 
 #prototype-to-prd .workspace-evidence-caption {
-  padding: 0;
+  padding: 0.5rem 0 0;
+}
+
+#prototype-to-prd .workspace-evidence-comparison {
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+#prototype-to-prd .workspace-evidence-comparison-group + .workspace-evidence-comparison-group {
+  padding-left: 0.5rem;
 }
 
 .workspace-evidence-comparison {
@@ -1335,6 +1538,17 @@ button {
 }
 
 @media (max-width: 56.25rem) {
+  #prototype-to-prd .workspace-evidence-routing {
+    grid-template-columns: 1fr;
+  }
+
+  #prototype-to-prd .workspace-architecture {
+    padding-top: 1rem;
+    padding-left: 0;
+    border-top: 1px solid var(--divider);
+    border-left: 0;
+  }
+
   .collaboration-lane,
   .collaboration-lane:first-child,
   .collaboration-lane:last-child {
@@ -1438,6 +1652,39 @@ button {
 
   body {
     font-size: 0.9375rem;
+  }
+
+  .workspace-architecture-layer {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.25rem 0.625rem;
+  }
+
+  .workspace-architecture-responsibility,
+  .workspace-architecture-condition {
+    grid-column: 2;
+  }
+
+  .workspace-architecture-condition {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .workspace-architecture-main-path,
+  .workspace-architecture-branch,
+  .workspace-architecture-output-path {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-architecture-main-path .workspace-architecture-connector,
+  .workspace-architecture-branch .workspace-architecture-connector,
+  .workspace-architecture-output-path .workspace-architecture-connector {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .workspace-architecture-routing-node--determined,
+  .workspace-architecture-boundary {
+    text-align: center;
   }
 
   .section-transition img,

@@ -4,6 +4,7 @@
   const DEFAULT_LOCALE = "zh-CN";
   const SUPPORTED_LOCALES = new Set(["zh-CN", "en-US"]);
   const LOCALE_STORAGE_KEY = "portfolio.locale";
+  let initialHashHandled = false;
 
   const getElement = (selector, root = document) => root.querySelector(selector);
 
@@ -279,6 +280,127 @@
     return container;
   };
 
+  const createSkillArchitecture = (architecture) => {
+    const container = document.createElement("div");
+    container.className = "workspace-detail workspace-architecture";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = architecture.label;
+
+    const introduction = document.createElement("p");
+    introduction.className = "workspace-architecture-introduction";
+    introduction.textContent = architecture.introduction;
+
+    const layerElements = new Map();
+
+    architecture.layers.forEach((layer) => {
+      const item = document.createElement("article");
+      item.className = "workspace-architecture-layer";
+      item.dataset.layer = layer.role;
+
+      const number = document.createElement("span");
+      number.className = "workspace-architecture-layer-number";
+      number.textContent = layer.number;
+
+      const name = document.createElement("h3");
+      name.textContent = layer.name;
+
+      const responsibility = document.createElement("p");
+      responsibility.className = "workspace-architecture-responsibility";
+      responsibility.textContent = layer.responsibility;
+
+      const condition = document.createElement("p");
+      condition.className = "workspace-architecture-condition";
+      condition.textContent = layer.condition;
+
+      item.append(number, name, responsibility, condition);
+      layerElements.set(layer.role, item);
+    });
+
+    const createConnector = (direction = "horizontal") => {
+      const connector = document.createElement("span");
+      connector.className = `workspace-architecture-connector workspace-architecture-connector--${direction}`;
+      connector.textContent = direction === "vertical" ? "↓" : "→";
+      connector.setAttribute("aria-hidden", "true");
+      return connector;
+    };
+
+    const createRoutingNode = (text, modifier) => {
+      const node = document.createElement("p");
+      node.className = `workspace-architecture-routing-node workspace-architecture-routing-node--${modifier}`;
+      node.textContent = text;
+      return node;
+    };
+
+    const map = document.createElement("div");
+    map.className = "workspace-architecture-map";
+
+    const layerStack = document.createElement("div");
+    layerStack.className = "workspace-architecture-layers";
+    architecture.layers.forEach((layer) => {
+      layerStack.append(layerElements.get(layer.role));
+    });
+
+    const mainPath = document.createElement("div");
+    mainPath.className = "workspace-architecture-main-path";
+    mainPath.append(
+      createRoutingNode(
+        `${layerElements.get("core").querySelector("h3").textContent} + ${layerElements.get("platform").querySelector("h3").textContent}`,
+        "source"
+      ),
+      createConnector(),
+      createRoutingNode(architecture.routing.decision, "decision")
+    );
+
+    const boundary = document.createElement("aside");
+    boundary.className = "workspace-architecture-boundary";
+
+    const boundaryLabel = document.createElement("p");
+    boundaryLabel.className = "workspace-detail-label";
+    boundaryLabel.textContent = architecture.boundary.label;
+
+    const boundaryText = document.createElement("p");
+    boundaryText.textContent = architecture.boundary.text;
+
+    boundary.append(boundaryLabel, boundaryText);
+
+    const branches = document.createElement("div");
+    branches.className = "workspace-architecture-branches";
+
+    const determinedBranch = document.createElement("div");
+    determinedBranch.className = "workspace-architecture-branch workspace-architecture-branch--determined";
+    determinedBranch.append(
+      createRoutingNode(architecture.routing.determined, "determined"),
+      createConnector(),
+      createRoutingNode(architecture.routing.confirmed, "confirmed")
+    );
+
+    const humanBranch = document.createElement("div");
+    humanBranch.className = "workspace-architecture-branch workspace-architecture-branch--human";
+    humanBranch.append(
+      boundary,
+      createConnector(),
+      createRoutingNode(architecture.routing.confirmed, "confirmed")
+    );
+    branches.append(determinedBranch, humanBranch);
+
+    const outputPath = document.createElement("div");
+    outputPath.className = "workspace-architecture-output-path";
+    outputPath.append(
+      createRoutingNode(
+        layerElements.get("company").querySelector("h3").textContent,
+        "company"
+      ),
+      createConnector(),
+      createRoutingNode(architecture.routing.output, "output")
+    );
+
+    map.append(layerStack, mainPath, branches, outputPath);
+    container.append(label, introduction, map);
+    return container;
+  };
+
   const createSectionTransition = (target) => {
     const transitionAssets = {
       "exploration": {
@@ -371,6 +493,14 @@
       );
     }
 
+    const architecture = section.architecture
+      ? createSkillArchitecture(section.architecture)
+      : null;
+
+    if (architecture && section.target !== "prototype-to-prd") {
+      content.append(architecture);
+    }
+
     const method = document.createElement("div");
     method.className = "workspace-detail workspace-method";
 
@@ -399,10 +529,20 @@
       evidenceGroup.append(...section.evidence.map(createWorkspaceEvidence));
 
       if (section.target === "prototype-to-prd") {
-        content.insertBefore(evidenceGroup, method);
+        const evidenceRouting = document.createElement("div");
+        evidenceRouting.className = "workspace-evidence-routing";
+        evidenceRouting.append(evidenceGroup);
+
+        if (architecture) {
+          evidenceRouting.append(architecture);
+        }
+
+        content.insertBefore(evidenceRouting, method);
       } else {
         content.append(evidenceGroup);
       }
+    } else if (architecture && section.target === "prototype-to-prd") {
+      content.insertBefore(architecture, method);
     }
 
     content.append(
@@ -494,6 +634,21 @@
     renderFooter(content.footer);
   };
 
+  const restoreInitialHash = () => {
+    if (initialHashHandled) {
+      return;
+    }
+
+    initialHashHandled = true;
+
+    const targetId = window.location.hash.slice(1);
+    const target = targetId ? document.getElementById(targetId) : null;
+
+    if (target) {
+      window.requestAnimationFrame(() => target.scrollIntoView());
+    }
+  };
+
   const fetchLocale = async (locale) => {
     const response = await fetch(`content/${locale}.json`);
 
@@ -523,6 +678,7 @@
     try {
       const content = await fetchLocale(locale);
       renderPage(content, locale);
+      restoreInitialHash();
       saveLocale(locale);
     } catch (error) {
       if (locale !== DEFAULT_LOCALE) {

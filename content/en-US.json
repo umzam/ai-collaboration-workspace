@@ -19,7 +19,7 @@
           "type": "neutral"
         },
         {
-          "label": "Stable and repeatable",
+          "label": "Multi-stage · Independently reviewable",
           "type": "neutral"
         },
         {
@@ -33,7 +33,7 @@
           "type": "ai"
         },
         {
-          "label": "Skill",
+          "label": "Skill orchestration + Human Gate",
           "type": "ai"
         },
         {
@@ -63,9 +63,9 @@
       "number": "02",
       "modeLabel": "STRUCTURED MODE",
       "evidenceLabel": "",
-      "taskNature": "Stable · Repeatable · Clear criteria",
-      "collaborationMode": "Reusable Skill + Human Gate",
-      "name": "Prototype-to-PRD"
+      "taskNature": "Multi-stage · Independently reviewable · Judgment boundaries",
+      "collaborationMode": "Skill orchestration + Human Gate",
+      "name": "PRD Collaboration Agent"
     },
     "creative": {
       "number": "03",
@@ -82,82 +82,133 @@
       "kind": "mode",
       "eyebrow": "01 · EXPLORATION MODE",
       "title": "Conversational Prototyping",
-      "introduction": "While requirements remain unstable, use conversation and interactive prototypes to progressively narrow the problem instead of freezing unvalidated rules into a Skill too early.",
+      "introduction": "When requirements are still unstable, use conversation and interactive prototypes to progressively narrow the problem instead of prematurely freezing unvalidated judgments into a Skill.",
       "problem": {
         "label": "Problem",
         "text": "Direction, constraints, and success criteria are not yet stable."
       },
       "method": {
-        "label": "Collaboration Method",
+        "label": "Exploration Loop",
         "workflow": [
           { "label": "Initial Idea", "type": "neutral" },
           { "label": "AI Questions", "type": "ai" },
-          { "label": "Human Judgment", "type": "human" },
+          { "label": "Human Trade-offs", "type": "human" },
           { "label": "Generate Prototype", "type": "ai" },
           { "label": "Hands-on Experience", "type": "neutral" },
-          { "label": "Feedback Iteration", "type": "ai" }
+          { "label": "Update Judgment", "type": "neutral" }
         ],
         "groups": [
           {
-            "label": "AI",
+            "label": "AI expands the problem space",
             "items": [
-              { "text": "Ask questions, organize context, and rapidly generate prototypes" }
+              { "text": "Question · Organize context · Generate alternatives" }
             ]
           },
           {
-            "label": "Human",
+            "label": "Human narrows the decision space",
             "items": [
-              { "text": "Set direction, confirm trade-offs, and decide when to converge" }
+              { "text": "Set direction · Make trade-offs · Judge assumptions" }
             ]
           }
         ]
       },
       "evidence": [],
-      "result": {
-        "label": "Result",
-        "text": "A vague idea becomes a product direction that can be experienced and judged."
+      "prematureFreeze": {
+        "label": "Premature Freeze Path",
+        "workflow": [
+          { "label": "Unvalidated Assumption", "type": "neutral" },
+          { "label": "Freeze as a Rule", "type": "ai" },
+          { "label": "Error Repeats Automatically", "type": "neutral" }
+        ],
+        "insight": "The problem is not always unstable AI execution; it can be AI consistently executing a rule that was never validated."
+      },
+      "convergenceTargets": {
+        "label": "What each loop converges",
+        "items": [
+          { "name": "Problem Boundary", "text": "What actually needs to be solved" },
+          { "name": "Product Constraints", "text": "What must remain and what can be removed" },
+          { "name": "Success Criteria", "text": "What outcome is worth continuing" }
+        ]
+      },
+      "convergence": {
+        "label": "Convergence Decision",
+        "text": "Exploration does not end when there is ‘an answer’; it ends when the key judgments are stable enough.",
+        "paths": [
+          { "condition": "Judgments still changing", "outcome": "Continue conversation and prototyping", "type": "neutral" },
+          { "condition": "Rules stable and repeatable", "outcome": "Distill into a Skill", "type": "ai" },
+          { "condition": "Multi-stage · Independently reviewable\nExecution must resume", "outcome": "Agent orchestration + Human Gate", "type": "human" }
+        ]
       }
     },
     {
       "target": "prototype-to-prd",
       "kind": "case",
       "eyebrow": "02 · STRUCTURED MODE",
-      "title": "Prototype-to-PRD",
-      "introduction": "",
+      "title": "PRD Collaboration Agent",
+      "introduction": "Orchestrate PRD generation and independent review into a collaboration flow controlled by a Human Gate. Prototype-to-PRD is the starting point in this capability’s evolution.",
       "problem": {
-        "label": "Goal",
-        "text": "Transform observable interface facts from a prototype into development specifications, and send product semantics that existing evidence cannot uniquely determine to the Human Gate."
+        "label": "Problem",
+        "text": "A prototype can express observable behavior, but it cannot prove complete product rules. After PRD generation, issues may remain in states, permissions, exceptions, and prototype consistency; AI must not fill in unconfirmed product semantics on its own."
       },
-      "method": {
-        "label": "Runtime Workflow",
-        "workflow": [
+      "evolution": {
+        "label": "Evolution",
+        "stages": [
           {
-            "label": "Prototype Reading",
-            "type": "neutral",
-            "substeps": ["Read pages and interactions", "Extract observable facts"]
+            "name": "Prototype-to-PRD Skill",
+            "description": "Extract observable facts from a prototype, identify specification gaps, and transform confirmed content into a PRD."
           },
           {
-            "label": "Gap Detection",
+            "name": "PRD Review Skill",
+            "description": "Independently inspect product logic, states, permissions, exceptions, and prototype ↔ PRD consistency."
+          },
+          {
+            "name": "PRD Collaboration Agent",
+            "description": "A lightweight orchestration layer that connects the generation and review Skills and manages pauses, resumption, and targeted re-review."
+          }
+        ]
+      },
+      "method": {
+        "label": "Agent Flow",
+        "introduction": "This is a lightweight Skill-orchestration Agent. It does not autonomously plan complex tasks; it calls two validated Skills, pauses at a Human Gate, and resumes after a human decision.",
+        "workflow": [
+          {
+            "label": "Prototype",
+            "type": "neutral",
+            "substeps": ["Observable evidence"]
+          },
+          {
+            "label": "Generate PRD",
             "type": "ai",
-            "substeps": ["State gaps", "Permissions and exceptions", "Loop-closure check"]
+            "substeps": ["Prototype-to-PRD Skill"]
+          },
+          {
+            "label": "Review",
+            "type": "ai",
+            "substeps": ["PRD Review Skill"]
           },
           {
             "label": "Human Gate",
             "type": "human",
-            "substeps": ["Product-semantic ambiguity", "Business-rule confirmation"]
+            "substeps": ["Product-semantic judgment"]
           },
           {
-            "label": "PRD Transformation",
+            "label": "Revise",
             "type": "ai",
-            "substeps": ["Specification generation", "Prototype–PRD consistency check"]
+            "substeps": ["Close findings"]
           },
           {
-            "label": "Review and Validation",
+            "label": "Targeted Re-review",
+            "type": "ai",
+            "substeps": ["Check affected items only"]
+          },
+          {
+            "label": "Ready",
             "type": "neutral",
-            "substeps": ["Exception closure check", "Development-readiness check", "Historical project regression"]
+            "substeps": ["0 Remaining"]
           }
         ],
-        "groups": []
+        "groups": [],
+        "note": "A Human Gate can trigger early at any stage; the Agent does not mechanically preserve a fixed sequence."
       },
       "evidence": [
         {
@@ -191,8 +242,9 @@
         }
       ],
       "architecture": {
-        "label": "From Prototype Evidence to Layered Rules",
-        "introduction": "The Skill has three separately maintained parts: Core Skill, Company Rules, and Platform Rules. This prevents historical project answers from becoming defaults in the general Skill.",
+        "stageLabel": "GENERATION STAGE",
+        "label": "Inside the PRD Generation Skill",
+        "introduction": "This layer is responsible for generating specifications from the prototype. After generation, the work moves into independent review and Agent orchestration.",
         "layers": [
           {
             "number": "01",
@@ -228,9 +280,28 @@
           "text": "Business semantics that evidence cannot uniquely determine stay out of Skill defaults; people decide them and keep them within the specific project."
         }
       },
+      "humanGateEvidence": {
+        "label": "Human Gate Evidence",
+        "finding": "A missing piece of information was found: the current materials did not define whether a particular role participates in the feature.",
+        "question": "Instead of adding a permission rule directly, the Agent first asked whether this role belonged to the current requirement scope.",
+        "decision": {
+          "label": "Human Decision",
+          "text": "The role was outside the current requirement scope, so it was classified as Out of Scope and no new permission rule was added."
+        },
+        "principle": {
+          "label": "Product Principle",
+          "text": "Missing information ≠ something that must be filled in. First determine whether it belongs to the current scope."
+        },
+        "example": "Real example: while generating the PRD, existing evidence could not uniquely determine whether reviewers should support a second AI extraction."
+      },
+      "validation": {
+        "label": "Validation",
+        "workflow": ["4 Findings", "4 Closed", "0 Remaining", "Ready"],
+        "text": "The Human Gate interrupted the flow in a real run. Execution resumed after the Human Decision, and targeted re-review closed all four findings."
+      },
       "result": {
         "label": "Result",
-        "text": "Historical regression across two real requirements validated the three-layer structure: reusable judgment methods remain stable, company and platform rules can evolve independently, and project-specific answers do not become defaults."
+        "text": "The goal of this Agent is not to make AI complete more work autonomously, but to let two reusable Skills collaborate continuously within explicit boundaries and hand control back to people when product judgment is required."
       }
     },
     {
@@ -289,8 +360,8 @@
                 "text": "The result retained too much subject structure."
               },
               {
-                "title": "Visual elements were unconstrained",
-                "text": "Open language continued to trigger reconstruction."
+                "title": "Visual primitives were under-constrained",
+                "text": "Eyes, fur, and complete contours were still reconstructed; visual primitives needed to limit the available cues."
               }
             ]
           }
@@ -328,6 +399,36 @@
           "description": "Reduce non-essential detail while retaining subject recognition and interaction cues."
         }
       ],
+      "stabilityEvidence": {
+        "label": "CROSS-INPUT REPRODUCTION",
+        "introduction": "",
+        "items": [
+          {
+            "kind": "source",
+            "image": "assets/images/reference-to-style/original2.JPG",
+            "alt": "Second source photo of a white Chihuahua sitting behind a table",
+            "label": "Source Photo",
+            "title": "",
+            "description": ""
+          },
+          {
+            "kind": "failure",
+            "image": "assets/images/reference-to-style/fail2.png",
+            "alt": "Second early output still reconstructing the eyes, contours, and body structure in full",
+            "label": "Early Output",
+            "title": "",
+            "description": ""
+          },
+          {
+            "kind": "result",
+            "image": "assets/images/reference-to-style/pass2.png",
+            "alt": "Second constrained output retaining recognizable Chihuahua cues with fewer lines",
+            "label": "Constrained Result",
+            "title": "",
+            "description": ""
+          }
+        ]
+      },
       "result": {
         "label": "Result",
         "text": "Rules constrain the generation boundary, but Human Evaluation decides final acceptance."
@@ -338,13 +439,13 @@
     "title": "A Shared Judgment Pattern",
     "introduction": "The Human Gate appears at different points in each task. In both cases, people take over only when the available evidence cannot determine a unique answer.",
     "aiSpace": {
-      "heading": "Structured Task · Prototype-to-PRD",
+      "heading": "Structured Task · PRD Collaboration Agent",
       "verbs": [
-        "Prototype facts",
-        "Specification gaps",
-        "Semantic decisions"
+        "PRD generation",
+        "Independent review",
+        "Boundary decision"
       ],
-      "description": "AI extracts observable facts and identifies missing rules. The Human Gate confirms states, permissions, exceptions, and success boundaries."
+      "description": "The Agent orchestrates generation and independent review. When review finds an issue that existing evidence cannot uniquely determine, the Human Gate decides before revision and targeted re-review continue."
     },
     "humanSpace": {
       "heading": "Creative Task · Reference-to-Style",
@@ -371,7 +472,7 @@
     ],
     "caseStudyLinks": [
       {
-        "label": "Prototype-to-PRD",
+        "label": "PRD Collaboration Agent",
         "target": "prototype-to-prd"
       },
       {

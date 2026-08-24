@@ -6,6 +6,10 @@
   const LOCALE_STORAGE_KEY = "portfolio.locale";
   let initialHashHandled = false;
 
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
   const getElement = (selector, root = document) => root.querySelector(selector);
 
   const setText = (selector, value, root = document) => {
@@ -280,13 +284,104 @@
     return container;
   };
 
+  const createPrematureFreezePath = (path) => {
+    const block = document.createElement("aside");
+    block.className = "workspace-premature-freeze";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = path.label;
+
+    const workflow = document.createElement("ol");
+    workflow.className = "workspace-premature-freeze-flow";
+    renderWorkflowNodes(workflow, path.workflow);
+
+    const insight = document.createElement("p");
+    insight.className = "workspace-premature-freeze-insight";
+    insight.textContent = path.insight;
+
+    block.append(label, workflow, insight);
+    return block;
+  };
+
+  const createConvergenceTargets = (targets) => {
+    const block = document.createElement("article");
+    block.className = "workspace-convergence-targets";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = targets.label;
+
+    const items = document.createElement("div");
+    items.className = "workspace-convergence-target-list";
+
+    targets.items.forEach((target) => {
+      const item = document.createElement("div");
+      const name = document.createElement("h3");
+      const text = document.createElement("p");
+      name.textContent = target.name;
+      text.textContent = target.text;
+      item.append(name, text);
+      items.append(item);
+    });
+
+    block.append(label, items);
+    return block;
+  };
+
+  const createExplorationRoles = (groups) => {
+    const block = document.createElement("div");
+    block.className = "workspace-exploration-roles";
+    block.append(...groups.map(createMethodGroup));
+    return block;
+  };
+
+  const createConvergenceDecision = (convergence) => {
+    const block = document.createElement("div");
+    block.className = "workspace-convergence-decision";
+
+    const heading = document.createElement("div");
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = convergence.label;
+    const text = document.createElement("p");
+    text.className = "workspace-convergence-decision-text";
+    text.textContent = convergence.text;
+    heading.append(label, text);
+
+    const paths = document.createElement("div");
+    paths.className = "workspace-convergence-paths";
+
+    convergence.paths.forEach((path) => {
+      const item = document.createElement("div");
+      item.className = `workspace-convergence-path workspace-convergence-path--${path.type}`;
+      const condition = document.createElement("span");
+      condition.textContent = path.condition;
+      const arrow = document.createElement("span");
+      arrow.className = "workspace-convergence-arrow";
+      arrow.textContent = "→";
+      arrow.setAttribute("aria-hidden", "true");
+      const outcome = document.createElement("strong");
+      outcome.textContent = path.outcome;
+      item.append(condition, arrow, outcome);
+      paths.append(item);
+    });
+
+    block.append(heading, paths);
+    return block;
+  };
+
   const createSkillArchitecture = (architecture) => {
     const container = document.createElement("div");
     container.className = "workspace-detail workspace-architecture";
 
-    const label = document.createElement("p");
-    label.className = "workspace-detail-label";
-    label.textContent = architecture.label;
+    const stageLabel = document.createElement("p");
+    stageLabel.className = "workspace-detail-label workspace-architecture-stage";
+    stageLabel.textContent = architecture.stageLabel;
+
+    const title = document.createElement("h3");
+    title.className = "workspace-architecture-title";
+    title.textContent = architecture.label;
 
     const introduction = document.createElement("p");
     introduction.className = "workspace-architecture-introduction";
@@ -397,8 +492,140 @@
     );
 
     map.append(layerStack, mainPath, branches, outputPath);
-    container.append(label, introduction, map);
+    container.append(stageLabel, title, introduction, map);
     return container;
+  };
+
+  const createEvolution = (evolution) => {
+    const container = document.createElement("div");
+    container.className = "workspace-detail workspace-evolution";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = evolution.label;
+
+    const stages = document.createElement("ol");
+    stages.className = "workspace-evolution-stages";
+
+    evolution.stages.forEach((stage) => {
+      const item = document.createElement("li");
+      const name = document.createElement("h3");
+      const description = document.createElement("p");
+      name.textContent = stage.name;
+      description.textContent = stage.description;
+      item.append(name, description);
+      stages.append(item);
+    });
+
+    container.append(label, stages);
+    return container;
+  };
+
+  const createHumanGateEvidence = (evidence) => {
+    const container = document.createElement("aside");
+    container.className = "workspace-detail workspace-human-gate-evidence";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = evidence.label;
+
+    const context = document.createElement("div");
+    context.className = "workspace-human-gate-context";
+
+    const finding = document.createElement("p");
+    finding.textContent = evidence.finding;
+
+    const question = document.createElement("p");
+    question.textContent = evidence.question;
+    context.append(finding, question);
+
+    const outcome = document.createElement("div");
+    outcome.className = "workspace-human-gate-outcome";
+
+    [evidence.decision, evidence.principle].forEach((item) => {
+      const block = document.createElement("div");
+      const blockLabel = document.createElement("p");
+      blockLabel.className = "workspace-detail-label";
+      blockLabel.textContent = item.label;
+      const blockText = document.createElement("p");
+      blockText.textContent = item.text;
+      block.append(blockLabel, blockText);
+      outcome.append(block);
+    });
+
+    const example = document.createElement("p");
+    example.className = "workspace-human-gate-example";
+    example.textContent = evidence.example;
+
+    container.append(label, context, outcome, example);
+    return container;
+  };
+
+  const createValidation = (validation) => {
+    const container = document.createElement("div");
+    container.className = "workspace-detail workspace-validation";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = validation.label;
+
+    const flow = document.createElement("ol");
+    flow.className = "workspace-validation-flow";
+    validation.workflow.forEach((step) => {
+      const item = document.createElement("li");
+      item.textContent = step;
+      flow.append(item);
+    });
+
+    const text = document.createElement("p");
+    text.className = "workspace-validation-text";
+    text.textContent = validation.text;
+
+    container.append(label, flow, text);
+    return container;
+  };
+
+  const createReferenceEvidenceMatrix = (evidence, stabilityEvidence, methodGroups) => {
+    const matrix = document.createElement("div");
+    matrix.className = "workspace-detail workspace-reference-evidence-matrix";
+
+    const [source, early, rule, result] = evidence.map(createWorkspaceEvidence);
+    source.classList.add("workspace-matrix-primary-source");
+    early.classList.add("workspace-matrix-primary-early");
+    result.classList.add("workspace-matrix-primary-result");
+
+    const ruleBand = document.createElement("div");
+    ruleBand.className = "workspace-reference-rule-band";
+
+    if (methodGroups.length) {
+      const diagnosis = document.createElement("div");
+      diagnosis.className = "workspace-reference-diagnosis";
+      diagnosis.append(...methodGroups.map(createMethodGroup));
+      ruleBand.append(diagnosis);
+    }
+
+    rule.classList.add("workspace-reference-rule");
+    ruleBand.append(rule);
+
+    const primaryRow = document.createElement("div");
+    primaryRow.className = "workspace-reference-evidence-row workspace-reference-evidence-row--primary";
+    primaryRow.append(source, early, result);
+
+    const repeatLabel = document.createElement("p");
+    repeatLabel.className = "workspace-detail-label workspace-matrix-repeat-label";
+    repeatLabel.textContent = stabilityEvidence.label;
+
+    const [repeatSource, repeatFailure, repeatResult] = stabilityEvidence.items.map(createWorkspaceEvidence);
+    repeatSource.classList.add("workspace-matrix-repeat-source");
+    repeatFailure.classList.add("workspace-matrix-repeat-early");
+    repeatResult.classList.add("workspace-matrix-repeat-result");
+
+    const repeatRow = document.createElement("div");
+    repeatRow.className = "workspace-reference-evidence-row workspace-reference-evidence-row--repeat";
+    repeatRow.append(repeatLabel, repeatSource, repeatFailure, repeatResult);
+
+    matrix.append(ruleBand, primaryRow, repeatRow);
+    return matrix;
   };
 
   const createSectionTransition = (target) => {
@@ -493,12 +720,23 @@
       );
     }
 
+    if (section.evolution) {
+      content.append(createEvolution(section.evolution));
+    }
+
     const architecture = section.architecture
       ? createSkillArchitecture(section.architecture)
       : null;
 
     if (architecture && section.target !== "prototype-to-prd") {
       content.append(architecture);
+    }
+
+    const isExplorationFramework =
+      section.kind === "mode" && Boolean(section.convergenceTargets);
+
+    if (isExplorationFramework && section.prematureFreeze) {
+      content.append(createPrematureFreezePath(section.prematureFreeze));
     }
 
     const method = document.createElement("div");
@@ -512,9 +750,29 @@
     workflow.className = "workspace-detail-workflow";
     renderWorkflowNodes(workflow, section.method.workflow);
 
-    method.append(methodLabel, workflow);
+    method.append(methodLabel);
 
-    if (section.method.groups.length) {
+    if (section.method.introduction) {
+      const methodIntroduction = document.createElement("p");
+      methodIntroduction.className = "workspace-method-introduction";
+      methodIntroduction.textContent = section.method.introduction;
+      method.append(methodIntroduction);
+    }
+
+    method.append(workflow);
+
+    if (section.method.note) {
+      const methodNote = document.createElement("p");
+      methodNote.className = "workspace-method-note";
+      methodNote.textContent = section.method.note;
+      method.append(methodNote);
+    }
+
+    if (
+      section.method.groups.length &&
+      !isExplorationFramework &&
+      !(section.target === "reference-to-style" && section.stabilityEvidence)
+    ) {
       const groups = document.createElement("div");
       groups.className = "workspace-method-groups";
       groups.append(...section.method.groups.map(createMethodGroup));
@@ -523,7 +781,29 @@
 
     content.append(method);
 
-    if (section.evidence.length) {
+    if (isExplorationFramework) {
+      const understanding = document.createElement("div");
+      understanding.className = "workspace-exploration-understanding";
+      understanding.append(
+        createConvergenceTargets(section.convergenceTargets),
+        createExplorationRoles(section.method.groups)
+      );
+      content.append(understanding);
+
+      if (section.convergence) {
+        content.append(createConvergenceDecision(section.convergence));
+      }
+    }
+
+    if (section.target === "reference-to-style" && section.stabilityEvidence) {
+      content.append(
+        createReferenceEvidenceMatrix(
+          section.evidence,
+          section.stabilityEvidence,
+          section.method.groups
+        )
+      );
+    } else if (section.evidence.length) {
       const evidenceGroup = document.createElement("div");
       evidenceGroup.className = "workspace-evidence-group";
       evidenceGroup.append(...section.evidence.map(createWorkspaceEvidence));
@@ -545,9 +825,19 @@
       content.insertBefore(architecture, method);
     }
 
-    content.append(
-      createDetailBlock("workspace-result", section.result.label, section.result.text)
-    );
+    if (section.humanGateEvidence) {
+      content.append(createHumanGateEvidence(section.humanGateEvidence));
+    }
+
+    if (section.validation) {
+      content.append(createValidation(section.validation));
+    }
+
+    if (section.result) {
+      content.append(
+        createDetailBlock("workspace-result", section.result.label, section.result.text)
+      );
+    }
 
     const transition = createSectionTransition(section.target);
 
@@ -645,7 +935,16 @@
     const target = targetId ? document.getElementById(targetId) : null;
 
     if (target) {
-      window.requestAnimationFrame(() => target.scrollIntoView());
+      window.requestAnimationFrame(() => {
+        target.scrollIntoView();
+        window.history.replaceState(
+          null,
+          "",
+          `${window.location.pathname}${window.location.search}`
+        );
+      });
+    } else {
+      window.scrollTo(0, 0);
     }
   };
 
@@ -708,6 +1007,29 @@
   };
 
   const languageSwitch = getElement("#language-switch");
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#"]');
+
+    if (!link) {
+      return;
+    }
+
+    const target = document.getElementById(link.hash.slice(1));
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${window.location.search}`
+    );
+  });
+
   languageSwitch.addEventListener("click", () => {
     loadLocale(languageSwitch.dataset.locale);
   });

@@ -19,7 +19,7 @@
           "type": "neutral"
         },
         {
-          "label": "稳定且可重复",
+          "label": "多阶段 · 可独立评审",
           "type": "neutral"
         },
         {
@@ -33,7 +33,7 @@
           "type": "ai"
         },
         {
-          "label": "Skill",
+          "label": "Skill 编排 + Human Gate",
           "type": "ai"
         },
         {
@@ -63,9 +63,9 @@
       "number": "02",
       "modeLabel": "结构化模式",
       "evidenceLabel": "",
-      "taskNature": "稳定 · 可重复 · 标准明确",
-      "collaborationMode": "可复用 Skill + Human Gate",
-      "name": "Prototype-to-PRD"
+      "taskNature": "多阶段 · 可独立评审 · 存在判断边界",
+      "collaborationMode": "Skill 编排 + Human Gate",
+      "name": "PRD Collaboration Agent"
     },
     "creative": {
       "number": "03",
@@ -82,82 +82,133 @@
       "kind": "mode",
       "eyebrow": "01 · 探索模式",
       "title": "对话式原型探索",
-      "introduction": "在需求仍不稳定时，通过对话和可交互原型逐步收紧问题，而不是过早把尚未验证的规则固化成 Skill。",
+      "introduction": "在需求仍不稳定时，通过对话和可交互原型逐步收紧问题，而不是过早把尚未验证的判断固化成 Skill。",
       "problem": {
         "label": "问题",
         "text": "方向、约束与成功标准尚未稳定。"
       },
       "method": {
-        "label": "协作方式",
+        "label": "探索循环",
         "workflow": [
           { "label": "初始想法", "type": "neutral" },
           { "label": "AI 提问", "type": "ai" },
-          { "label": "人做判断", "type": "human" },
+          { "label": "人做取舍", "type": "human" },
           { "label": "生成原型", "type": "ai" },
           { "label": "实际体验", "type": "neutral" },
-          { "label": "反馈迭代", "type": "ai" }
+          { "label": "更新判断", "type": "neutral" }
         ],
         "groups": [
           {
-            "label": "AI",
+            "label": "AI 扩展问题空间",
             "items": [
-              { "text": "提问、整理上下文、快速生成原型" }
+              { "text": "提问 · 整理上下文 · 生成备选方案" }
             ]
           },
           {
-            "label": "Human",
+            "label": "人收缩决策空间",
             "items": [
-              { "text": "判断方向、确认取舍、决定何时收敛" }
+              { "text": "定方向 · 做取舍 · 判断假设是否成立" }
             ]
           }
         ]
       },
       "evidence": [],
-      "result": {
-        "label": "结果",
-        "text": "将模糊想法收敛为可体验、可继续判断的产品方向。"
+      "prematureFreeze": {
+        "label": "过早固化路径",
+        "workflow": [
+          { "label": "未验证假设", "type": "neutral" },
+          { "label": "固化为规则", "type": "ai" },
+          { "label": "错误被自动重复", "type": "neutral" }
+        ],
+        "insight": "问题不一定是 AI 执行不稳定，也可能是 AI 稳定执行了尚未验证的规则。"
+      },
+      "convergenceTargets": {
+        "label": "每轮收敛什么",
+        "items": [
+          { "name": "问题边界", "text": "真正需要解决什么" },
+          { "name": "产品约束", "text": "哪些必须保留，哪些可以舍弃" },
+          { "name": "成功标准", "text": "什么结果值得继续" }
+        ]
+      },
+      "convergence": {
+        "label": "收敛判断",
+        "text": "不是聊到‘有答案’为止，而是聊到‘关键判断足够稳定’为止。",
+        "paths": [
+          { "condition": "判断仍在变化", "outcome": "继续对话与原型迭代", "type": "neutral" },
+          { "condition": "规则稳定且可重复", "outcome": "沉淀为 Skill", "type": "ai" },
+          { "condition": "多阶段 · 可独立评审\n需要恢复执行", "outcome": "Agent 编排 + Human Gate", "type": "human" }
+        ]
       }
     },
     {
       "target": "prototype-to-prd",
       "kind": "case",
       "eyebrow": "02 · 结构化模式",
-      "title": "Prototype-to-PRD",
-      "introduction": "",
+      "title": "PRD Collaboration Agent",
+      "introduction": "将 PRD 生成与独立评审能力编排成受 Human Gate 控制的协作流程。Prototype-to-PRD 是这一能力的演进起点。",
       "problem": {
-        "label": "目标",
-        "text": "把原型中可观察的界面事实转化为开发规格，并把无法由现有证据唯一决定的产品语义交给 Human Gate。"
+        "label": "问题",
+        "text": "原型能表达可观察行为，但不能证明完整的产品规则。PRD 生成后仍可能存在状态、权限、异常和原型一致性问题，未确认的产品语义不能由 AI 自行补齐。"
       },
-      "method": {
-        "label": "内部执行流程",
-        "workflow": [
+      "evolution": {
+        "label": "能力演进",
+        "stages": [
           {
-            "label": "原型读取",
-            "type": "neutral",
-            "substeps": ["页面与交互读取", "可观察事实提取"]
+            "name": "Prototype-to-PRD Skill",
+            "description": "从原型中提取可观察事实、识别规格缺口，并将已确认内容转化为 PRD。"
           },
           {
-            "label": "缺口识别",
+            "name": "PRD Review Skill",
+            "description": "独立检查产品逻辑、状态、权限、异常及原型 ↔ PRD 一致性。"
+          },
+          {
+            "name": "PRD Collaboration Agent",
+            "description": "一个轻量编排层，负责串联生成与评审 Skill，并管理暂停、恢复和定向复审。"
+          }
+        ]
+      },
+      "method": {
+        "label": "Agent 主流程",
+        "introduction": "这是一个轻量的 Skill 编排 Agent：不负责自主规划复杂任务，而是负责调用两个已验证的 Skill、在 Human Gate 处暂停，并在人工决策后恢复执行。",
+        "workflow": [
+          {
+            "label": "原型",
+            "type": "neutral",
+            "substeps": ["可观察证据"]
+          },
+          {
+            "label": "生成 PRD",
             "type": "ai",
-            "substeps": ["状态缺口", "权限与异常", "闭环检查"]
+            "substeps": ["Prototype-to-PRD Skill"]
+          },
+          {
+            "label": "评审",
+            "type": "ai",
+            "substeps": ["PRD Review Skill"]
           },
           {
             "label": "Human Gate",
             "type": "human",
-            "substeps": ["产品语义歧义", "业务规则确认"]
+            "substeps": ["产品语义判断"]
           },
           {
-            "label": "PRD 转换",
+            "label": "修订",
             "type": "ai",
-            "substeps": ["规格生成", "原型与 PRD 一致性检查"]
+            "substeps": ["关闭评审问题"]
           },
           {
-            "label": "评审与验证",
+            "label": "定向复审",
+            "type": "ai",
+            "substeps": ["只检查受影响项"]
+          },
+          {
+            "label": "开发就绪",
             "type": "neutral",
-            "substeps": ["异常闭环检查", "开发就绪检查", "历史项目回归"]
+            "substeps": ["无剩余问题"]
           }
         ],
-        "groups": []
+        "groups": [],
+        "note": "Human Gate 可以在任意阶段提前触发，Agent 不机械维持固定顺序。"
       },
       "evidence": [
         {
@@ -191,8 +242,9 @@
         }
       ],
       "architecture": {
-        "label": "从原型证据到三层规则",
-        "introduction": "Skill 由 Core Skill、Company Rules 和 Platform Rules 三部分组成；三者分开维护，避免把历史项目答案固化进通用 Skill。",
+        "stageLabel": "生成阶段",
+        "label": "PRD 生成 Skill 的内部机制",
+        "introduction": "这一层负责从原型生成规格；生成完成后，再进入独立评审与 Agent 编排。",
         "layers": [
           {
             "number": "01",
@@ -228,9 +280,28 @@
           "text": "证据无法唯一确定的业务语义不进入 Skill 默认规则，由人决策并保留在具体项目中。"
         }
       },
+      "humanGateEvidence": {
+        "label": "Human Gate 真实证据",
+        "finding": "发现一个“缺失信息”：当前材料没有定义某个角色是否参与该功能。",
+        "question": "Agent 没有直接补充权限规则，而是先判断：这个角色是否属于当前需求范围？",
+        "decision": {
+          "label": "人工决定",
+          "text": "该角色不属于当前需求范围，因此归为本次需求范围外，不新增权限规则。"
+        },
+        "principle": {
+          "label": "产品原则",
+          "text": "缺失信息 ≠ 必须补齐，先判断是否属于当前需求范围。"
+        },
+        "example": "真实案例：生成 PRD 时发现“审核员是否支持二次 AI 抽取”无法由现有证据唯一确定。"
+      },
+      "validation": {
+        "label": "验证",
+        "workflow": ["发现 4 个问题", "关闭 4 个", "0 个遗留", "开发就绪"],
+        "text": "Human Gate 真实中断流程，人工决定后恢复执行，4 个评审问题经定向复审全部关闭。"
+      },
       "result": {
         "label": "结果",
-        "text": "两个真实需求的历史回归验证了三层结构：通用判断方法可以复用，公司与平台规则可以独立更新，具体项目答案不会被固化为默认规则。"
+        "text": "这套 Agent 的目标不是让 AI 自主完成更多，而是让两个可复用 Skill 在明确边界内连续协作，并在需要产品判断时停下来交还给人。"
       }
     },
     {
@@ -258,22 +329,22 @@
           {
             "label": "内容筛选",
             "type": "ai",
-            "substeps": ["内容本质提取", "场景角色判断", "Inclusion Filter"]
+            "substeps": ["内容本质提取", "场景角色判断", "内容准入过滤器（Inclusion Filter）"]
           },
           {
             "label": "特征压缩",
             "type": "ai",
-            "substeps": ["Minimal Cue Plan", "关键身份线索保留", "非核心细节压缩"]
+            "substeps": ["最小线索计划（Minimal Cue Plan）", "关键身份线索保留", "非核心细节压缩"]
           },
           {
             "label": "生成编译",
             "type": "ai",
-            "substeps": ["Loose-Line Compiler", "语义线索 → 视觉原语", "Generation Spec Validator"]
+            "substeps": ["松线风格编译器（Loose-Line Compiler）", "语义线索 → 视觉原语", "生成规格校验器（Generation Spec Validator）"]
           },
           {
             "label": "评估",
             "type": "human",
-            "substeps": ["QA", "Human Evaluation", "可选一次修正"]
+            "substeps": ["质量检查（QA）", "人工评估", "可选一次修正"]
           }
         ],
         "groups": [
@@ -289,8 +360,8 @@
                 "text": "结果仍保留过多主体结构。"
               },
               {
-                "title": "视觉元素无法约束",
-                "text": "开放式语言继续触发额外重建。"
+                "title": "视觉原语约束不足",
+                "text": "眼睛、毛发与完整轮廓仍被重建，需要用视觉原语限制可用线索。"
               }
             ]
           }
@@ -311,12 +382,12 @@
           "alt": "简化后的结果仍然包含过多身体轮廓和局部特征",
           "label": "早期输出",
           "title": "过度重建照片细节",
-          "description": "模型仍然补全眼睛、毛发、轮廓等完整视觉信息，虽然更写实，但不符合目标 Style Profile。"
+          "description": "模型仍然补全眼睛、毛发、轮廓等完整视觉信息，虽然更写实，但不符合目标风格规范。"
         },
         {
           "kind": "rule",
           "label": "生成规则",
-          "title": "Feature Compression + Visual Primitive",
+          "title": "特征压缩 + 视觉原语（Feature Compression + Visual Primitive）",
           "description": "不是从完整照片不断删减，而是从关键身份与关系线索重新构建。"
         },
         {
@@ -328,9 +399,39 @@
           "description": "减少非核心细节，同时保留主体识别与互动线索。"
         }
       ],
+      "stabilityEvidence": {
+        "label": "跨输入复现",
+        "introduction": "",
+        "items": [
+          {
+            "kind": "source",
+            "image": "assets/images/reference-to-style/original2.JPG",
+            "alt": "第二组输入照片：一只坐在桌前的白色吉娃娃",
+            "label": "原始照片",
+            "title": "",
+            "description": ""
+          },
+          {
+            "kind": "failure",
+            "image": "assets/images/reference-to-style/fail2.png",
+            "alt": "第二组早期输出，仍然完整描绘眼睛、轮廓和身体结构",
+            "label": "早期输出",
+            "title": "",
+            "description": ""
+          },
+          {
+            "kind": "result",
+            "image": "assets/images/reference-to-style/pass2.png",
+            "alt": "第二组受约束输出，以更少线条保留吉娃娃的识别特征",
+            "label": "受约束结果",
+            "title": "",
+            "description": ""
+          }
+        ]
+      },
       "result": {
         "label": "结果",
-        "text": "规则约束生成边界，但 Human Evaluation 决定最终接受度。"
+        "text": "规则约束生成边界，但人工评估决定最终接受度。"
       }
     }
   ],
@@ -338,13 +439,13 @@
     "title": "两个案例共享的判断模式",
     "introduction": "任务不同，Human Gate 介入的位置也不同；共同点是，人只接管现有证据无法唯一决定的判断。",
     "aiSpace": {
-      "heading": "结构化任务 · Prototype-to-PRD",
+      "heading": "结构化任务 · PRD Collaboration Agent",
       "verbs": [
-        "原型事实",
-        "规格缺口",
-        "语义确认"
+        "PRD 生成",
+        "独立评审",
+        "边界判断"
       ],
-      "description": "AI 从原型提取可观察事实并识别缺失规则；状态、权限、异常与成功边界由 Human Gate 确认。"
+      "description": "Agent 编排生成与独立评审；当评审发现现有证据无法唯一决定的问题时，由 Human Gate 判断后再继续修订与定向复审。"
     },
     "humanSpace": {
       "heading": "创意任务 · Reference-to-Style",
@@ -353,7 +454,7 @@
         "规则约束",
         "接受度判断"
       ],
-      "description": "AI 把失败转化为特征压缩与视觉基元规则；结果是否保留正确的身份与关系，由 Human Evaluation 判断。"
+      "description": "AI 把失败转化为特征压缩与视觉基元规则；结果是否保留正确的身份与关系，由人工评估判断。"
     },
     "humanGate": {
       "label": "共同判断边界",
@@ -371,7 +472,7 @@
     ],
     "caseStudyLinks": [
       {
-        "label": "Prototype-to-PRD",
+        "label": "PRD Collaboration Agent",
         "target": "prototype-to-prd"
       },
       {

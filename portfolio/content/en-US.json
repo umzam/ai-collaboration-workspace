@@ -214,7 +214,7 @@
         {
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
-          "alt": "XML dual-source comparison prototype with sources, working copy, and completion control",
+          "alt": "Publication-safe synthetic document comparison prototype with sources, working copy, and completion control",
           "label": "Prototype Input",
           "title": "",
           "description": "",
@@ -292,12 +292,12 @@
           "label": "Product Principle",
           "text": "Missing information ≠ something that must be filled in. First determine whether it belongs to the current scope."
         },
-        "example": "Real example: while generating the PRD, existing evidence could not uniquely determine whether reviewers should support a second AI extraction."
+        "example": "Synthetic reconstruction: while generating the PRD, existing evidence could not uniquely determine whether a separate reviewer role belonged to the current AI enrichment scope."
       },
       "validation": {
         "label": "Validation",
         "workflow": ["4 Findings", "4 Closed", "0 Remaining", "Ready"],
-        "text": "The Human Gate interrupted the flow in a real run. Execution resumed after the Human Decision, and targeted re-review closed all four findings."
+        "text": "The Human Gate interrupted the complete E2E flow. Execution resumed after the Human Decision, and targeted re-review closed all four findings. The public case is a synthetic reconstruction based on observed product workflow patterns, not a production metric."
       },
       "result": {
         "label": "Result",

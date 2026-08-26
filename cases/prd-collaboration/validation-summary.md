@@ -1,8 +1,8 @@
 # Context
 
-- Evaluation environment: a real work project containing an HTML prototype and PRD.
+- Evaluation environment: a publication-safe synthetic reconstruction based on observed product workflow patterns.
 - Reusable method / source of truth: `ai-collaboration-workspace`.
-- E2E-01 input: frozen, desensitized real-project Prototype plus confirmed context and project rules.
+- E2E-01 input: frozen synthetic Prototype plus confirmed fictional context and project rules.
 - Evidence boundary: only `e2e-01/input/`, the two Skills, applicable bundled rules, and the recorded Human Decision were used. Historical final PRDs and unlisted historical answers were not used.
 
 # Baseline
@@ -17,14 +17,14 @@ The original open-source Review Skill produced useful HTML prototype ↔ PRD con
 
 # prd-review v0.1 Regression
 
-- Regression source: the real PRD and prototype used during v0.1 refinement.
+- Regression source: a private historical validation set used during v0.1 refinement; its project artifacts are not included in this public repository.
 - Core findings: 7.
 - Human Gates: 5.
 - Observed result: output was materially more focused while retaining the high-value review findings.
 
 # Agent Validation
 
-Previously validated sequence in the real work project:
+Previously validated sequence in the private historical validation workspace:
 
 `Review → Human Gate → Human Decision → Revision → Targeted Re-review → Ready`
 
@@ -49,7 +49,7 @@ E2E-01 actual sequence:
 # Human Decision
 
 - Gate: `HG-001`.
-- Decision: reviewer support is outside the current AI secondary-extraction requirement; no reviewer permission model is defined.
+- Decision: the separate reviewer role is outside the current synthetic AI enrichment increment; no reviewer permission model is defined.
 - Classification after decision: Out of Scope, not an unresolved Human Gate.
 - PRD impact: removed the reviewer pending-permission entry and recorded the scope boundary.
 - Prototype impact: None.

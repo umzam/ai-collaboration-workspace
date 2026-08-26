@@ -55,7 +55,7 @@ Agent 负责决定何时调用 Skill、何时暂停、如何根据 Human Decisio
 
 ## Validation
 
-第一次完整 E2E 使用脱敏后的真实项目 Prototype 和上下文，实际跑通了生成、独立评审、Human Gate、人工决策、修订和定向复审：
+第一次完整 E2E 使用基于已观察产品工作流模式构建的 synthetic reconstruction，实际跑通了生成、独立评审、Human Gate、人工决策、修订和定向复审：
 
 ```text
 4 Findings → 4 Closed → 0 Remaining → Ready
@@ -97,7 +97,7 @@ ai-collaboration-workspace/
 └── docs/                        # Portfolio and collaboration decisions
 ```
 
-Internal source documents, private regression workspaces, historical Skill versions and reference-image research are intentionally excluded from the public Git surface.
+Internal source documents, private regression workspaces, historical Skill versions and reference-image research are excluded from the current public Git tree. The public E2E package is a synthetic reconstruction and does not reproduce a real project artifact.
 
 ## Designed vs Reused
 
@@ -117,4 +117,4 @@ The upstream Skill was not used unchanged. I first tested it against a real, san
 
 ## Status
 
-This is an actively evolving personal AI product portfolio project. The current repository captures validated collaboration methods and public evidence; future iterations may add new task types only when they require a meaningfully different AI/Human boundary.
+This is an actively evolving personal AI product portfolio and experimental project. The current repository captures validated collaboration methods and public evidence; it does not claim production-grade generality or benchmark performance. Future iterations may add new task types only when they require a meaningfully different AI/Human boundary.

@@ -66,13 +66,13 @@ Agent 没有直接补充权限规则，而是先判断：这个角色是否属�
 
 “缺失信息 ≠ 必须补齐，先判断是否属于当前 Scope。”
 
-真实案例：生成 PRD 时发现“审核员是否支持二次 AI 抽取”无法由现有证据唯一确定。
+Synthetic reconstruction：生成 PRD 时发现“独立 Reviewer 角色是否参与当前 AI enrichment 功能”无法由现有证据唯一确定。
 
 ## Validation
 
 `4 Findings → 4 Closed → 0 Remaining → Ready`
 
-Human Gate 真实中断流程，Human Decision 后恢复执行，4 个评审问题经定向复审全部关闭。
+Human Gate 在完整 E2E 执行中断流程，Human Decision 后恢复执行，4 个评审问题经定向复审全部关闭。该公开案例是基于已观察工作流模式构建的 synthetic reconstruction，不是生产指标。
 
 ## Result
 

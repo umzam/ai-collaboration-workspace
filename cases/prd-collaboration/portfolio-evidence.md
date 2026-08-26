@@ -35,9 +35,9 @@ Targeted re-review:
 
 ## 4. Representative Human Gate
 
-**问题来源：** Generate 阶段识别到“审核员是否支持二次 AI 抽取”无法从当前证据唯一确定。
+**问题来源：** Generate 阶段识别到“独立 Reviewer 角色是否参与当前 AI enrichment 功能”无法从当前证据唯一确定。
 
-**Human Decision：** 当前二次 AI 抽取需求范围不涉及审核员，因此不应将该问题扩展为新的产品权限设计。
+**Human Decision：** 当前 synthetic increment 不涉及 Reviewer，因此不应将缺失信息扩展为新的产品权限设计。
 
 **最终判断：** 将该问题归为 `Out of Scope`，而不是要求补齐审核员权限。
 
@@ -50,7 +50,7 @@ Targeted re-review:
 - 没有有效模型时不能进入创建确认。
 - 提示词管理入口需符合当前状态与范围规则。
 
-这些问题来自 Prototype ↔ PRD 一致性及产品规则检查，并在 targeted re-review 中全部关闭。
+这些问题来自 publication-safe synthetic Prototype ↔ PRD 一致性及产品规则检查，并在 targeted re-review 中全部关闭。
 
 ## 6. What This Validates
 

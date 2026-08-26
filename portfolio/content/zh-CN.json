@@ -214,7 +214,7 @@
         {
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
-          "alt": "XML 双源比对工作台原型，包含来源、工作副本和加工完成入口",
+          "alt": "Publication-safe 合成文档比对原型，包含来源、工作副本和完成入口",
           "label": "原型输入",
           "title": "",
           "description": "",
@@ -281,7 +281,7 @@
         }
       },
       "humanGateEvidence": {
-        "label": "Human Gate 真实证据",
+        "label": "Human Gate E2E 证据",
         "finding": "发现一个“缺失信息”：当前材料没有定义某个角色是否参与该功能。",
         "question": "Agent 没有直接补充权限规则，而是先判断：这个角色是否属于当前需求范围？",
         "decision": {
@@ -292,12 +292,12 @@
           "label": "产品原则",
           "text": "缺失信息 ≠ 必须补齐，先判断是否属于当前需求范围。"
         },
-        "example": "真实案例：生成 PRD 时发现“审核员是否支持二次 AI 抽取”无法由现有证据唯一确定。"
+        "example": "Synthetic reconstruction：生成 PRD 时发现“独立 Reviewer 角色是否属于当前 AI enrichment 范围”无法由现有证据唯一确定。"
       },
       "validation": {
         "label": "验证",
         "workflow": ["发现 4 个问题", "关闭 4 个", "0 个遗留", "开发就绪"],
-        "text": "Human Gate 真实中断流程，人工决定后恢复执行，4 个评审问题经定向复审全部关闭。"
+        "text": "Human Gate 在完整 E2E 中断流程，人工决定后恢复执行，4 个评审问题经定向复审全部关闭。公开案例是基于已观察产品工作流模式构建的 synthetic reconstruction，不是生产指标。"
       },
       "result": {
         "label": "结果",

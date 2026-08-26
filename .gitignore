@@ -1,2 +1,23 @@
+# OS and editor files
 .DS_Store
 **/.DS_Store
+.idea/
+.vscode/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+
+# Internal workspace context and non-public research material
+PROJECT_CONTEXT.md
+_reference_skills/
+experiments/
+skills/source/
+skills/archive/
+source/
+wiki/
+
+# Temporary files
+*.tmp
+*.log

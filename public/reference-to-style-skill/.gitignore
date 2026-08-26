@@ -1,0 +1,14 @@
+.DS_Store
+.workbuddy/
+.codex/
+photo/
+ripo-tou/
+experiments/
+test-runs/
+*.log
+*.tmp
+*.cache
+__pycache__/
+*.py[cod]
+.env
+.env.*

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prototype to PRD"
+  short_description: "将已确定的产品原型转成可开发 PRD，并完成闭环评审"
+  default_prompt: "Use $prototype-to-prd to analyze this confirmed prototype, resolve specification gaps, write the PRD, and complete all reviews."

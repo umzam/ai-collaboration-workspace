@@ -16,7 +16,13 @@ Use to generate a PRD from the current prototype and to apply confirmed decision
 
 ### prd-review
 
-Use to review product logic, workflows, states, permissions, exception behavior, prototype ↔ PRD consistency, and implementation or acceptance blockers.
+Use to review product logic, workflows, states, permissions, exception behavior,
+prototype ↔ PRD consistency, and Delivery Readiness.
+
+Delivery Readiness checks whether current requirements support:
+- a unique implementation expectation;
+- deterministic testing expectations;
+- explicit product acceptance Pass / Fail criteria.
 
 ## Workflow
 
@@ -36,6 +42,9 @@ Use to review product logic, workflows, states, permissions, exception behavior,
 - Invoke `prd-review` with the current PRD, prototype, confirmed rules, and recorded Human Decisions.
 - Keep review independent from revision: do not modify source artifacts during this stage.
 - Preserve finding IDs and distinguish `Confirmed Mismatch` from `Prototype Assumption`.
+- Treat Delivery Readiness as one review dimension, not a separate workflow stage. It checks Implementation Readiness, Testability, and Acceptance Readiness alongside the same product rules.
+- Do not create a duplicate Finding when Readiness only strengthens the implementation, testing, or acceptance impact of an existing issue.
+- Add a new Finding only when Readiness exposes a distinct implementation, testability, or acceptance gap.
 
 ### 4. Human Gate
 
@@ -44,6 +53,8 @@ Enter Human Gate when Review finds any of the following:
 - undefined product semantics;
 - multiple reasonable product solutions;
 - a prototype assumption that requires product confirmation.
+
+Delivery Readiness findings involving unconfirmed product semantics, business rules, permission or responsibility boundaries, AI quality release standards, or data-conflict strategies use this same Human Gate mechanism. Do not create a second Gate for Delivery Readiness.
 
 When at least one Human Gate exists:
 
@@ -79,6 +90,8 @@ Return `Ready` only when all three conditions are true:
 - `Remaining findings = None`
 - `New blocker = None`
 - `Human Gates = None`
+
+A `Ready` result also means no unresolved material gap prevents development, testing, or product acceptance from deriving a unique expected outcome.
 
 Otherwise return `Not Ready` or `Ready with Conditions` as supported by the review, and identify the next unresolved action. Never loosen these conditions to make the workflow complete.
 

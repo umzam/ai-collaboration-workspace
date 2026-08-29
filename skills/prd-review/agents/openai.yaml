@@ -1,4 +1,4 @@
 interface:
   display_name: "Product PRD Review"
-  short_description: "轻量评审 PRD 与原型，聚焦阻塞问题和产品决策。"
-  default_prompt: "Use $prd-review to review the current PRD and prototype for blocking issues, independent Human Gates, confirmed mismatches, and prototype assumptions."
+  short_description: "轻量评审 PRD 与原型，聚焦阻塞问题、交付准备度和产品决策。"
+  default_prompt: "Use $prd-review to review the current PRD and prototype for blocking issues, delivery readiness, independent Human Gates, confirmed mismatches, and prototype assumptions."

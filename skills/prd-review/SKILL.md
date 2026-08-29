@@ -1,11 +1,11 @@
 ---
 name: prd-review
-description: Review PRDs and product prototypes for high-value product gaps that block development or acceptance. Use for daily PRD reviews, requirement reviews, product-spec reviews, and HTML prototype ↔ PRD consistency checks. Focus on flows, states, permissions, exception closure, unconfirmed prototype assumptions, and decisions that require a product or business owner; do not perform exhaustive documentation audits by default.
+description: Review PRDs and product prototypes for high-value product gaps that block deterministic implementation, testing, or acceptance. Use for daily PRD reviews, requirement reviews, delivery-readiness reviews, product-spec reviews, and HTML prototype ↔ PRD consistency checks. Focus on flows, states, permissions, exception closure, delivery readiness, unconfirmed prototype assumptions, and decisions that require a product or business owner; do not perform exhaustive documentation audits by default.
 ---
 
-# Product PRD Review v0.1
+# Product PRD Review v0.2
 
-Perform a lightweight, evidence-based product review. Find the few issues that materially affect product meaning, implementation readiness, or acceptance. Do not optimize for exhaustive completeness.
+Perform a lightweight, evidence-based product review. Find the few issues that materially affect product meaning, deterministic implementation, testability, or acceptance. Do not optimize for exhaustive completeness.
 
 ## Review Contract
 
@@ -13,7 +13,6 @@ Perform a lightweight, evidence-based product review. Find the few issues that m
 - Treat a prototype as important behavioral evidence, not as automatic business truth.
 - Do not modify the PRD or prototype. Only write the review artifact requested by the user.
 - Do not invent or complete unconfirmed business rules.
-- When multiple reasonable product choices remain, create a Human Gate instead of choosing one.
 - Do not default to technical design. Mention technical or AI concerns only when they expose a product decision, feasibility risk, or acceptance blocker.
 - Ignore low-value wording, formatting, template compliance, and generic non-functional concerns unless they block development or acceptance.
 - Prefer a short list of high-value findings over a comprehensive checklist dump.
@@ -31,7 +30,7 @@ When useful, place labels directly in the `Issue` cell, for example: `Stated: ..
 
 ## Route and Human Gate
 
-Assign exactly one `Route` to identify the primary owner of the next action. Set `Human Gate` independently to `Yes` or `No`; it is not an Issue Type or Route. A finding may be `Product Issue` with `Human Gate = Yes`.
+Assign exactly one `Route` to identify the primary owner of the next action. Set `Human Gate` independently to `Yes` or `No`; it is not a route. A finding may be `Product Issue` with `Human Gate = Yes`.
 
 ### Product Issue
 
@@ -48,6 +47,7 @@ Use for a **Confirmed Prototype-PRD Mismatch**: the PRD states a rule and the pr
 ### Human Gate field
 
 - Set `Yes` when product or business semantics require a decision and the available materials do not provide a unique answer. Do not select the answer for them.
+- This includes unresolved AI quality release standards, data-conflict behavior, permission or responsibility boundaries, and other high-impact product choices. Technical owners may provide constraints or candidate options, but the appropriate product or business owner must confirm the behavior.
 - Set `No` when the finding can be resolved from confirmed material or by technical validation without a new product/business decision.
 - Human Gate does not replace or override Route.
 
@@ -95,12 +95,22 @@ Tags describe the affected rule; they do not replace the primary route.
    - Check only the product rules needed to understand triggers, actors, choices, results, and side effects.
 
 3. **Run the high-value checks**
+   - Treat delivery readiness as a cross-cutting lens over the same product rules, not as a second independent review pass.
    - **Flow**: Can the main flow start, progress, finish, cancel, retry, and recover?
    - **State**: Are states, transitions, available actions, and terminal states consistent?
    - **Permission**: Is it clear who may view or perform consequential actions across all entry points?
    - **Exception**: Do important failure, empty-result, cancellation, retry, and partial-result paths reach a defined outcome?
    - **Data semantics**: Are product-level identity, overwrite, merge, preservation, and result-application rules deterministic? Do not prescribe technical implementation.
-   - **Acceptance**: Could development and QA derive one expected behavior for the important scenarios?
+   - **Delivery readiness**: For every material rule already described, determine whether it supports:
+     - **Implementation Readiness**: Development can derive one expected behavior from the PRD, prototype, and confirmed decisions.
+     - **Testability**: QA can define main-flow, exception, boundary, state, permission, and data-validation cases with one expected result.
+     - **Acceptance Readiness**: Product acceptance can judge the key behavior and result as Pass or Fail.
+   - Prioritize readiness gaps where a rule exists but remains non-executable, non-testable, or non-verifiable. Look especially for:
+     - ambiguous terms such as “recent,” “necessary,” “reasonable,” “appropriate,” “default,” “related,” or “as much as possible” when they permit materially different implementations;
+     - validation concepts without explicit pass/fail conditions, including field type, required fields, key completeness, illegal values, empty output, and partial failure;
+     - mentioned states, permissions, or exceptions that still lack executable triggers, actions, outcomes, or transitions;
+     - AI behavior described only as successful or correct without representative samples, quality/completeness criteria, tolerance rules, or an acceptance threshold when such a threshold is required for release;
+     - input limits, timeout/rate-limit behavior, output completeness, partial completion, or boundary conditions that prevent one implementation or test expectation.
 
 4. **Compare prototype ↔ PRD**
    - Classify direct behavioral conflicts as `Confirmed Mismatch`.
@@ -113,21 +123,25 @@ Tags describe the affected rule; they do not replace the primary route.
    - Assign severity, one Route, Human Gate `Yes/No`, Prototype Relation, and secondary tags.
    - Set Human Gate to `Yes` for every unresolved product/business semantic decision without changing its Route.
    - Merge duplicate symptoms into one finding with multiple locations.
+   - Do not create a second finding when readiness only explains the implementation, testing, or acceptance impact of an existing issue. Extend that finding's `Why it matters` instead.
+   - Add a readiness finding only when it identifies a distinct executable, testable, or acceptable gap not already represented by another finding.
 
 6. **Suggest direction, not the answer**
    - Explain why the issue matters.
    - Recommend the next handling step: clarify a decision, define an action matrix, align one artifact to a confirmed rule, or ask technical/AI owners to validate a constraint.
    - Do not choose a business rule on behalf of product. Do not write a full implementation design or a test matrix unless the user explicitly asks.
+   - For AI or technical findings, state the observable problem and the capability boundary that needs confirmation. Do not select a model, architecture, or implementation strategy for engineering.
 
 ## Ready Status
 
 Use one status:
 
-- **Not Ready**: at least one unresolved Blocker or core-flow Human Gate prevents deterministic development or acceptance.
-- **Ready with Conditions**: no core blocker remains, but High findings or non-core Human Gates must be resolved during design.
-- **Ready**: no material unresolved finding prevents the requested next stage.
+- **Not Ready**: at least one unresolved Blocker or core-flow Human Gate prevents deterministic implementation, testing, or acceptance.
+- **Ready with Conditions**: no core blocker remains, but High findings or non-core Human Gates must be resolved before they affect implementation, testing, or acceptance.
+- **Ready**: no material unresolved finding prevents development from forming one implementation expectation, QA from forming one test expectation, or product from applying Pass/Fail acceptance criteria to the core functionality.
 
-State readiness for the stage relevant to the request. If unspecified, assess readiness for development and acceptance.
+State readiness for the stage relevant to the request. If unspecified, assess readiness for development, testing, and acceptance.
+Allow non-blocking TBDs to remain. Do not create low-value findings merely to make the document appear complete.
 
 ## Required Output
 
@@ -157,7 +171,7 @@ Use exactly this compact structure unless the user requests another format:
 
 - Keep IDs stable and concise, such as `PRD-001`.
 - Route must be exactly one of `Product Issue`, `Technical / AI Issue`, or `Prototype-PRD Mismatch`.
-- Human Gate must be exactly `Yes` or `No` and must not appear as an Issue Type or Route.
+- Human Gate must be exactly `Yes` or `No` and must not appear as a Route.
 - Prototype Relation must be exactly `Confirmed Mismatch`, `Prototype Assumption`, or `None`.
 - Count confirmed mismatches and prototype assumptions separately; never combine them into one mismatch total.
 - In `Human Gates`, include only genuine semantic decisions absent from current materials. Do not repeat ordinary Product or Technical / AI findings.

@@ -3,7 +3,7 @@
 ## 文档状态
 
 - 用途：约束 AI Collaboration Workspace 首页的 HTML、CSS 与轻量 JavaScript 实现。
-- 页面定位：AI Collaboration Decision Framework，不是 Case Gallery，也不是 Case Detail 页面。
+- 页面定位：AI Collaboration Decision Framework，不是 Case Gallery，也不是传统长篇 Case Detail 页面。
 - 技术约束：纯 HTML、CSS、JavaScript；中文与英文内容由同构 JSON 文件提供。
 - 视觉依据：`Homepage_Visual_Direction.md`。
 - 内容依据：冻结后的 `Homepage_Content_Specification.md`。该文件必须存在后才能进入最终实现。
@@ -17,10 +17,13 @@
 1. Header
 2. Hero
 3. Collaboration Modes
-4. Shared Principle
-5. Footer
+4. Exploration Mode expansion
+5. Structured Case: PRD Collaboration Agent
+6. Creative Case: Reference-to-Style
+7. Shared Principle
+8. Footer
 
-首页不直接展开 Prototype-to-PRD 或 Reference-to-Style 的 Case Detail 内容。
+首页使用单页展开结构，不跳转独立 Case Detail 页面。Prototype-to-PRD 作为 PRD Collaboration Agent 内部的生成 Skill 展示。
 
 ## 1.1 Header
 
@@ -59,12 +62,12 @@
 
 - 通过三条 Workspace Lane 展示任务性质、协作方式和实践或案例证据。
 - 明确 Exploration 是 Collaboration Mode，而不是第三个 Case Study。
-- Structured 和 Creative 的 Case Name 本身可点击并进入对应 Case Detail。
+- Structured 和 Creative 的 Case Name 本身可点击并锚点滚动到对应的单页 Case Evidence。
 
 Lane 顺序：
 
 1. Exploration Mode → Conversational Prototyping
-2. Structured Mode → Prototype-to-PRD
+2. Structured Mode → PRD Collaboration Agent
 3. Creative Mode → Reference-to-Style
 
 每条 Lane 只展示：
@@ -107,7 +110,7 @@ Lane 顺序：
 
 - 重复品牌名。
 - 区分 Collaboration Mode 与 Case Studies。
-- 提供 Conversational Prototyping、Prototype-to-PRD、Reference-to-Style 的次级入口。
+- 提供 Conversational Prototyping、PRD Collaboration Agent、Reference-to-Style 的次级入口。
 - 展示最终 Closing Statement。
 
 Footer 不重复 Header 导航结构，不展示版本或 Evidence。
@@ -272,7 +275,7 @@ Mobile：
 
 - Case 状态 Badge。
 - 大型 Logo。
-- Prototype-to-PRD 和 Reference-to-Style 主导航入口。
+- PRD Collaboration Agent 和 Reference-to-Style 主导航入口。
 - CTA Button。
 
 ## 4.2 Hero Workflow
@@ -282,8 +285,8 @@ Mobile：
 视觉形式：
 
 - 一个起点节点 `TASK NATURE`。
-- 三条分支分别连接 High Uncertainty、Stable & Repeatable、Subjective Output。
-- 每条分支连接对应的 Conversation、Skill、Skill + Human Evaluation。
+- 三条分支分别连接 High Uncertainty、Multi-stage & Independently Reviewable、Subjective Output。
+- 每条分支连接对应的 Conversation、Skill orchestration + Human Gate、Skill + Human Evaluation。
 - 使用细线、小节点和微标签。
 
 禁止形式：
@@ -303,7 +306,7 @@ Mobile：
 - Lane 之间使用两条贯穿内容区的细分隔线。
 - 每条 Lane 使用统一的内容基线与 Workflow Node 规格。
 - Exploration 使用 `PRACTICE`；Structured 和 Creative 使用 `CASE EVIDENCE`。
-- Structured 与 Creative 的 Case Name 本身链接到 Case Detail；Exploration Name 只链接到 Mode 说明。
+- Structured 与 Creative 的 Case Name 本身链接到单页内对应 Case Evidence；Exploration Name 链接到 Mode 说明。
 - 不显示 `View Case →`、独立 Entry Button 或箭头式 CTA。
 
 禁止形式：
@@ -311,7 +314,32 @@ Mobile：
 - 独立卡片背景。
 - 阴影和大圆角。
 - 将三个 Lane 编号为三个 Case Study。
-- 在首页展开 Evidence 或 Regression。
+- 在首页展开完整 Evidence 或 Regression 细节。
+
+### 1.3.1 PRD Review lenses
+
+Structured Case may include an optional `validation.deliveryReadiness` content field. The existing Case renderer displays it inside the current validation area; it does not create a new top-level section or navigation entry.
+
+The field contains only:
+
+- `stageLabel`, `label`, `headline`, and one short comparison introduction;
+- `logicReview` and its three lightweight checks: Completeness, Consistency, and Definition;
+- `readinessReview`, which distinguishes delivery readiness from product-logic completeness;
+- the existing Evolution renderer carries the Review Skill provenance: public source → distilled checks → specification-writing lens;
+- the three dimensions: Implementation Readiness, Testability, and Acceptance Readiness;
+- no regression or version fields are rendered on the homepage.
+
+The Agent E2E validation workflow (`4 Findings → 4 Closed → 0 Remaining → Ready`) is not displayed on the homepage; its detailed evidence remains in the repository. The renderer must not copy the full Finding tables into the homepage. Delivery Readiness regression evidence remains under `skills/prd-review/evaluation/readiness-v0.2/`.
+
+Within the Structured Case, render in this order:
+
+`Agent Flow → Generation Stage / PRD Generation Skill → Review Stage / PRD Review → Result`
+
+The Generation Stage contains the Human Gate boundary and its product principle inside the PRD Generation Skill mechanism. Do not render a separate Generation-stage Human Gate evidence band between Generation and Review.
+
+`Agent Flow` is a visible hierarchy heading. `PRD Review` explains the two internal review lenses of the Review node; it must not read as a separate Agent stage, Case, or final result.
+
+Render Review Stage as one shallow workspace band rather than disconnected text or multiple cards. Match the Generation Stage with the same restrained pale-blue surface, compact rows, and divider treatment. Group its stage header, the two review lenses, and the three readiness dimensions inside that band. Do not render regression summaries, design decisions, or version labels. A final horizontal divider separates the complete Review Stage band from the following Result block.
 
 ## 4.4 Workflow Node
 
@@ -469,6 +497,6 @@ Mobile：
 - `Homepage_Content_Specification.md` 已存在并冻结。
 - 中文和英文 JSON 已按冻结文案同步。
 - Exploration、Structured、Creative 的层级已在内容与视觉规范中保持一致。
-- 首页不包含 Case Detail 内容。
+- 首页不创建独立 Case Detail 页面；Case Evidence 在单页内紧凑展开。
 
 若任一项缺失，只能进行目录和技术准备，不应开始最终页面实现。

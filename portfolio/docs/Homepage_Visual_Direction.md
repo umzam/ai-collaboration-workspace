@@ -152,7 +152,7 @@ Section Title 不应大到每个 Section 都像一个新 Landing Page。
 例如：
 
 - Conversational Prototyping
-- Prototype-to-PRD
+- PRD Collaboration Agent
 - Reference-to-Style
 
 Desktop：
@@ -202,7 +202,6 @@ Desktop：
 - PRACTICE
 - CASE EVIDENCE
 - HUMAN GATE
-- FROZEN v1.0
 
 规格：
 
@@ -508,14 +507,14 @@ Result
 - 使用线性 Workflow
 - Human Gate 节点为黄色
 - `CASE EVIDENCE` 标签
-- 显示 v1.0
+- Case 名称使用 `PRD Collaboration Agent`
+- Prototype-to-PRD 作为内部生成 Skill，不作为并列 Case
 
 **Creative**
 
 - 使用 Failure-driven Workflow
 - Human Evaluation 节点为黄色
 - `CASE EVIDENCE` 标签
-- 显示 `Frozen v0.3.3`
 - Mixed Regression Evidence 只属于 Reference-to-Style Case Detail，不在 Homepage 展示
 
 ### Hover / Focus
@@ -571,7 +570,7 @@ Result
 **Status node**
 
 - 尽量只使用文字
-- 如 `FROZEN v1.0`
+- 首页不展示 Skill 或 Case 版本号
 - 不必使用胶囊背景
 
 ### 连接线

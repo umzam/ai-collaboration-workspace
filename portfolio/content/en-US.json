@@ -148,7 +148,7 @@
       "introduction": "Orchestrate PRD generation and independent review into a collaboration flow controlled by a Human Gate. Prototype-to-PRD is the starting point in this capability’s evolution.",
       "problem": {
         "label": "Problem",
-        "text": "A prototype can express observable behavior, but it cannot prove complete product rules. After PRD generation, issues may remain in states, permissions, exceptions, and prototype consistency; AI must not fill in unconfirmed product semantics on its own."
+        "text": "A prototype can express observable behavior, but it cannot directly become an implementation-ready PRD. States, permissions, exceptions, and success boundaries still require confirmation; AI must not fill in unconfirmed product semantics on its own."
       },
       "evolution": {
         "label": "Evolution",
@@ -159,7 +159,7 @@
           },
           {
             "name": "PRD Review Skill",
-            "description": "Independently inspect product logic, states, permissions, exceptions, and prototype ↔ PRD consistency."
+            "description": "Started from a public PRD Review Skill, distilled the high-value product-logic checks, then added a specification-writing lens through Delivery Readiness to form the current PRD Review."
           },
           {
             "name": "PRD Collaboration Agent",
@@ -184,7 +184,7 @@
           {
             "label": "Review",
             "type": "ai",
-            "substeps": ["PRD Review Skill"]
+            "substeps": ["Product Logic + Delivery Readiness"]
           },
           {
             "label": "Human Gate",
@@ -214,7 +214,7 @@
         {
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
-          "alt": "Publication-safe synthetic document comparison prototype with sources, working copy, and completion control",
+          "alt": "XML dual-source comparison prototype with sources, working copy, and completion control",
           "label": "Prototype Input",
           "title": "",
           "description": "",
@@ -244,7 +244,7 @@
       "architecture": {
         "stageLabel": "GENERATION STAGE",
         "label": "Inside the PRD Generation Skill",
-        "introduction": "This layer is responsible for generating specifications from the prototype. After generation, the work moves into independent review and Agent orchestration.",
+        "introduction": "This layer transforms prototype evidence into a PRD. After generation, the work moves into independent review and Agent orchestration.",
         "layers": [
           {
             "number": "01",
@@ -277,27 +277,56 @@
         },
         "boundary": {
           "label": "Not Uniquely Determined → Human Gate",
-          "text": "Business semantics that evidence cannot uniquely determine stay out of Skill defaults; people decide them and keep them within the specific project."
+          "text": "Business semantics that evidence cannot uniquely determine stay out of Skill defaults; people decide them and keep them within the specific project.",
+          "principleLabel": "Product Principle",
+          "principle": "Missing information does not automatically need to be filled in. First determine whether it belongs to the current scope."
         }
       },
-      "humanGateEvidence": {
-        "label": "Human Gate Evidence",
-        "finding": "A missing piece of information was found: the current materials did not define whether a particular role participates in the feature.",
-        "question": "Instead of adding a permission rule directly, the Agent first asked whether this role belonged to the current requirement scope.",
-        "decision": {
-          "label": "Human Decision",
-          "text": "The role was outside the current requirement scope, so it was classified as Out of Scope and no new permission rule was added."
-        },
-        "principle": {
-          "label": "Product Principle",
-          "text": "Missing information ≠ something that must be filled in. First determine whether it belongs to the current scope."
-        },
-        "example": "Synthetic reconstruction: while generating the PRD, existing evidence could not uniquely determine whether a separate reviewer role belonged to the current AI enrichment scope."
-      },
       "validation": {
-        "label": "Validation",
-        "workflow": ["4 Findings", "4 Closed", "0 Remaining", "Ready"],
-        "text": "The Human Gate interrupted the complete E2E flow. Execution resumed after the Human Decision, and targeted re-review closed all four findings. The public case is a synthetic reconstruction based on observed product workflow patterns, not a production metric."
+        "deliveryReadiness": {
+          "stageLabel": "REVIEW STAGE",
+          "label": "PRD Review",
+          "headline": "From complete product logic to an implementation-ready, testable, and acceptance-ready PRD",
+          "introduction": "Product Logic Review is better at finding what product logic is missing; Delivery Readiness is better at finding whether already-defined rules can still produce one implementation, testing, and acceptance expectation.",
+          "logicReview": {
+            "name": "Product Logic Review",
+            "text": "Checks whether product logic is missing, conflicting, or undefined",
+            "checks": [
+              {
+                "name": "Completeness",
+                "text": "Are core states, roles, and exceptions covered?"
+              },
+              {
+                "name": "Consistency",
+                "text": "Do rules, flows, or permissions conflict?"
+              },
+              {
+                "name": "Definition",
+                "text": "Are terms, boundaries, and outcomes explicit?"
+              }
+            ]
+          },
+          "readinessReview": {
+            "name": "Delivery Readiness",
+            "text": "Checks whether already-defined rules can produce one implementation, testing, and acceptance expectation",
+            "lensLabel": "SPEC WRITING LENS",
+            "lensText": "Checks whether rules are written clearly enough to produce one implementation, testing, and acceptance expectation"
+          },
+          "dimensions": [
+            {
+              "name": "Implementation Readiness",
+              "text": "Can development derive one implementation expectation?"
+            },
+            {
+              "name": "Testability",
+              "text": "Can testing derive one expected result?"
+            },
+            {
+              "name": "Acceptance Readiness",
+              "text": "Can product judge Pass / Fail clearly?"
+            }
+          ]
+        }
       },
       "result": {
         "label": "Result",

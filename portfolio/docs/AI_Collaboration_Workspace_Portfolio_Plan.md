@@ -20,11 +20,13 @@ Example: Conversational Prototyping
 
 ### Structured Mode
 
-Stable and repeatable tasks.
+Multi-stage tasks with independently reviewable outputs and explicit judgment boundaries.
 
-Method: Reusable Skill + Human Gate
+Method: Skill orchestration + Human Gate
 
-Case: Prototype-to-PRD Skill
+Case: PRD Collaboration Agent
+
+Capability path: Prototype-to-PRD Skill → PRD Review Skill → PRD Collaboration Agent
 
 ### Creative Mode
 

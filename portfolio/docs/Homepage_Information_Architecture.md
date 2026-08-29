@@ -9,8 +9,9 @@ gallery.
 
 Homepage ├── Hero ├── Collaboration Modes │ ├── Exploration Mode │ │ └──
 Conversational Prototyping │ ├── Structured Mode │ │ └── Case Evidence:
-Prototype-to-PRD Skill │ └── Creative Mode │ └── Case Evidence:
-Reference-to-Style Skill ├── Shared Collaboration Principle └── Footer
+PRD Collaboration Agent │ │     └── Prototype-to-PRD Skill → PRD Review Skill
+│ └── Creative Mode │ └── Case Evidence: Reference-to-Style Skill
+├── Shared Collaboration Principle └── Footer
 
 ## Logic
 

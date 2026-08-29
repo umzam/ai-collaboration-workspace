@@ -456,9 +456,25 @@
     boundaryLabel.textContent = architecture.boundary.label;
 
     const boundaryText = document.createElement("p");
+    boundaryText.className = "workspace-architecture-boundary-text";
     boundaryText.textContent = architecture.boundary.text;
 
     boundary.append(boundaryLabel, boundaryText);
+
+    if (architecture.boundary.principle) {
+      const principle = document.createElement("div");
+      principle.className = "workspace-architecture-principle";
+
+      const principleLabel = document.createElement("p");
+      principleLabel.className = "workspace-detail-label";
+      principleLabel.textContent = architecture.boundary.principleLabel;
+
+      const principleText = document.createElement("p");
+      principleText.textContent = architecture.boundary.principle;
+
+      principle.append(principleLabel, principleText);
+      boundary.append(principle);
+    }
 
     const branches = document.createElement("div");
     branches.className = "workspace-architecture-branches";
@@ -521,49 +537,102 @@
     return container;
   };
 
-  const createHumanGateEvidence = (evidence) => {
-    const container = document.createElement("aside");
-    container.className = "workspace-detail workspace-human-gate-evidence";
+  const createDeliveryReadiness = (readiness) => {
+    const readinessBlock = document.createElement("div");
+    readinessBlock.className = "workspace-delivery-readiness";
 
-    const label = document.createElement("p");
-    label.className = "workspace-detail-label";
-    label.textContent = evidence.label;
+    const readinessStage = document.createElement("p");
+    readinessStage.className = "workspace-detail-label workspace-delivery-readiness-stage";
+    readinessStage.textContent = readiness.stageLabel;
 
-    const context = document.createElement("div");
-    context.className = "workspace-human-gate-context";
+    const readinessTitle = document.createElement("h3");
+    readinessTitle.textContent = readiness.label;
 
-    const finding = document.createElement("p");
-    finding.textContent = evidence.finding;
+    const readinessHeadline = document.createElement("p");
+    readinessHeadline.className = "workspace-delivery-readiness-headline";
+    readinessHeadline.textContent = readiness.headline;
 
-    const question = document.createElement("p");
-    question.textContent = evidence.question;
-    context.append(finding, question);
+    const readinessIntroduction = document.createElement("p");
+    readinessIntroduction.className = "workspace-delivery-readiness-introduction";
+    readinessIntroduction.textContent = readiness.introduction;
 
-    const outcome = document.createElement("div");
-    outcome.className = "workspace-human-gate-outcome";
+    const header = document.createElement("div");
+    header.className = "workspace-delivery-readiness-header";
+    header.append(
+      readinessStage,
+      readinessTitle,
+      readinessHeadline,
+      readinessIntroduction
+    );
 
-    [evidence.decision, evidence.principle].forEach((item) => {
-      const block = document.createElement("div");
-      const blockLabel = document.createElement("p");
-      blockLabel.className = "workspace-detail-label";
-      blockLabel.textContent = item.label;
-      const blockText = document.createElement("p");
-      blockText.textContent = item.text;
-      block.append(blockLabel, blockText);
-      outcome.append(block);
-    });
+    const createReviewChecks = (checks) => {
+      const checkList = document.createElement("div");
+      checkList.className = "workspace-review-checks";
+      checks.forEach((check) => {
+        const item = document.createElement("div");
+        const name = document.createElement("strong");
+        name.textContent = check.name;
+        const description = document.createElement("span");
+        description.textContent = check.text;
+        item.append(name, description);
+        checkList.append(item);
+      });
+      return checkList;
+    };
 
-    const example = document.createElement("p");
-    example.className = "workspace-human-gate-example";
-    example.textContent = evidence.example;
+    const reviewLenses = document.createElement("div");
+    reviewLenses.className = "workspace-delivery-readiness-lenses";
 
-    container.append(label, context, outcome, example);
-    return container;
+    const logicReview = document.createElement("div");
+    logicReview.className = "workspace-delivery-readiness-lens";
+    const logicReviewName = document.createElement("strong");
+    logicReviewName.textContent = readiness.logicReview.name;
+    const logicReviewText = document.createElement("p");
+    logicReviewText.textContent = readiness.logicReview.text;
+    logicReview.append(
+      logicReviewName,
+      logicReviewText,
+      createReviewChecks(readiness.logicReview.checks)
+    );
+
+    const readinessReview = document.createElement("div");
+    readinessReview.className = "workspace-delivery-readiness-lens";
+    const readinessReviewName = document.createElement("strong");
+    readinessReviewName.textContent = readiness.readinessReview.name;
+    const readinessReviewText = document.createElement("p");
+    readinessReviewText.textContent = readiness.readinessReview.text;
+    readinessReview.append(readinessReviewName, readinessReviewText);
+
+    if (readiness.readinessReview.lensLabel) {
+      const lensLabel = document.createElement("p");
+      lensLabel.className = "workspace-detail-label workspace-delivery-readiness-lens-label";
+      lensLabel.textContent = readiness.readinessReview.lensLabel;
+      readinessReview.append(lensLabel);
+    }
+
+    if (readiness.readinessReview.lensText) {
+      const lensText = document.createElement("p");
+      lensText.className = "workspace-delivery-readiness-lens-note";
+      lensText.textContent = readiness.readinessReview.lensText;
+      readinessReview.append(lensText);
+    }
+
+    readinessReview.append(createReviewChecks(readiness.dimensions));
+    reviewLenses.append(logicReview, readinessReview);
+
+    readinessBlock.append(header, reviewLenses);
+    return readinessBlock;
   };
 
   const createValidation = (validation) => {
     const container = document.createElement("div");
     container.className = "workspace-detail workspace-validation";
+
+    if (!validation.workflow && validation.deliveryReadiness) {
+      container.classList.add("workspace-validation--readiness");
+      container.append(createDeliveryReadiness(validation.deliveryReadiness));
+      return container;
+    }
 
     const label = document.createElement("p");
     label.className = "workspace-detail-label";
@@ -577,9 +646,15 @@
       flow.append(item);
     });
 
-    const text = document.createElement("p");
+    const text = document.createElement("div");
     text.className = "workspace-validation-text";
-    text.textContent = validation.text;
+    const validationText = document.createElement("p");
+    validationText.textContent = validation.text;
+    text.append(validationText);
+
+    if (validation.deliveryReadiness) {
+      text.append(createDeliveryReadiness(validation.deliveryReadiness));
+    }
 
     container.append(label, flow, text);
     return container;
@@ -742,8 +817,11 @@
     const method = document.createElement("div");
     method.className = "workspace-detail workspace-method";
 
-    const methodLabel = document.createElement("p");
-    methodLabel.className = "workspace-detail-label";
+    const isAgentFlow = section.target === "prototype-to-prd";
+    const methodLabel = document.createElement(isAgentFlow ? "h3" : "p");
+    methodLabel.className = isAgentFlow
+      ? "workspace-method-heading"
+      : "workspace-detail-label";
     methodLabel.textContent = section.method.label;
 
     const workflow = document.createElement("ol");
@@ -817,16 +895,12 @@
           evidenceRouting.append(architecture);
         }
 
-        content.insertBefore(evidenceRouting, method);
+        content.append(evidenceRouting);
       } else {
         content.append(evidenceGroup);
       }
     } else if (architecture && section.target === "prototype-to-prd") {
-      content.insertBefore(architecture, method);
-    }
-
-    if (section.humanGateEvidence) {
-      content.append(createHumanGateEvidence(section.humanGateEvidence));
+      content.append(architecture);
     }
 
     if (section.validation) {

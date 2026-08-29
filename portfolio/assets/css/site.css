@@ -700,6 +700,12 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   border-left: 0.1875rem solid var(--ink);
 }
 
+@media (min-width: 75rem) {
+  #prototype-to-prd .workspace-result .workspace-detail-text {
+    white-space: nowrap;
+  }
+}
+
 .workspace-evolution {
   grid-area: evolution;
   padding-block: 0.625rem;
@@ -759,66 +765,13 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   line-height: 1.5;
 }
 
-.workspace-human-gate-evidence {
-  grid-area: human-gate;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.62fr) minmax(0, 0.78fr);
-  gap: 0.625rem 1.25rem;
-  padding-block: 0.75rem;
-  border-top: 2px solid var(--human-line);
-  border-bottom: 1px solid var(--divider);
-}
-
-.workspace-human-gate-evidence > .workspace-detail-label,
-.workspace-human-gate-example {
-  grid-column: 1 / -1;
-}
-
-.workspace-human-gate-context p,
-.workspace-human-gate-outcome p {
-  margin-bottom: 0.375rem;
-  font-size: 0.8125rem;
-  line-height: 1.45;
-}
-
-.workspace-human-gate-context p:last-child,
-.workspace-human-gate-outcome p:last-child {
-  margin-bottom: 0;
-}
-
-.workspace-human-gate-context p:first-child {
+#prototype-to-prd .workspace-method-heading {
+  margin: 0 0 0.5rem;
   color: var(--ink);
+  font-size: clamp(1rem, 1.35vw, 1.125rem);
   font-weight: 600;
-}
-
-.workspace-human-gate-outcome {
-  display: contents;
-}
-
-.workspace-human-gate-outcome > div:last-child {
-  padding: 0.5rem 0.625rem;
-  border-left: 0.1875rem solid var(--human-line);
-  background: rgba(255, 246, 194, 0.38);
-}
-
-.workspace-human-gate-outcome > div:first-child > .workspace-detail-label {
-  display: inline-block;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  background: var(--ink);
-  color: var(--human);
-}
-
-.workspace-human-gate-outcome > div:last-child > p:last-child {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.workspace-human-gate-example {
-  margin: 0;
-  color: var(--soft-ink);
-  font-size: 0.6875rem;
-  line-height: 1.45;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
 }
 
 .workspace-validation {
@@ -869,6 +822,136 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   margin: 0;
   color: var(--soft-ink);
   font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.workspace-validation-text > p {
+  margin-bottom: 0;
+}
+
+.workspace-validation--readiness {
+  display: block;
+  padding: 0.875rem;
+  border-block: 1px solid var(--divider);
+  background: rgba(202, 228, 240, 0.1);
+}
+
+.workspace-delivery-readiness {
+  margin: 0;
+  padding: 0;
+}
+
+.workspace-delivery-readiness-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "stage"
+    "title"
+    "headline"
+    "introduction";
+  gap: 0.125rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--divider);
+}
+
+.workspace-delivery-readiness-header h3 {
+  grid-area: title;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.workspace-delivery-readiness-stage {
+  grid-area: stage;
+  align-self: start;
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+.workspace-delivery-readiness-headline {
+  grid-area: headline;
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.workspace-delivery-readiness-introduction {
+  grid-area: introduction;
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.workspace-delivery-readiness-lenses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+  padding-block: 0.625rem;
+}
+
+.workspace-delivery-readiness-lens {
+  min-width: 0;
+}
+
+.workspace-delivery-readiness-lens + .workspace-delivery-readiness-lens {
+  padding-left: 0.875rem;
+  border-left: 1px solid var(--divider);
+}
+
+.workspace-delivery-readiness-lens > strong {
+  display: block;
+  margin-bottom: 0.125rem;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.workspace-delivery-readiness-lens > p {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.workspace-delivery-readiness-lens-label {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.125rem !important;
+  color: var(--soft-ink) !important;
+  font-size: 0.625rem !important;
+}
+
+.workspace-delivery-readiness-lens-note {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.workspace-review-checks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.625rem;
+  margin-top: 0.5rem;
+}
+
+.workspace-review-checks > div {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.workspace-review-checks strong {
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.workspace-review-checks span {
+  color: var(--soft-ink);
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 
@@ -959,7 +1042,7 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 
 .workspace-architecture-main-path {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(8rem, 0.34fr);
   gap: 0.625rem;
   align-items: center;
   min-width: 0;
@@ -1007,7 +1090,7 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 
 .workspace-architecture-branch {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(8rem, 0.34fr);
   gap: 0.625rem;
   align-items: center;
   min-width: 0;
@@ -1028,7 +1111,7 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 
 .workspace-architecture-output-path {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(9rem, 0.44fr);
+  grid-template-columns: minmax(0, 1fr) 1.75rem minmax(8rem, 0.34fr);
   gap: 0.625rem;
   align-items: center;
   min-width: 0;
@@ -1055,10 +1138,38 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   margin-bottom: 0;
 }
 
-.workspace-architecture-boundary > p:last-child {
+.workspace-architecture-boundary-text,
+#prototype-to-prd .workspace-architecture-boundary > p:nth-child(2) {
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 500;
+  line-height: 1.45;
+}
+
+@media (min-width: 56.25rem) {
+  .workspace-architecture-boundary-text,
+  #prototype-to-prd .workspace-architecture-boundary > p:nth-child(2) {
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+}
+
+.workspace-architecture-principle {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  border-left: 0.1875rem solid var(--human-line);
+  background: rgba(255, 246, 194, 0.5);
+}
+
+.workspace-architecture-principle p {
+  margin: 0;
+}
+
+.workspace-architecture-principle > p:last-child {
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
   line-height: 1.45;
 }
 
@@ -1511,9 +1622,8 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   grid-template-areas:
     "problem"
     "evolution"
-    "routing"
     "method"
-    "human-gate"
+    "routing"
     "validation"
     "result";
   gap: 0.875rem;
@@ -1536,22 +1646,30 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 #prototype-to-prd .workspace-evidence-routing {
   grid-area: routing;
   display: grid;
-  grid-template-columns: minmax(15rem, 0.6fr) minmax(0, 1.4fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.6fr);
+  grid-template-areas: "architecture evidence";
   gap: clamp(1rem, 2vw, 1.75rem);
   align-items: start;
   min-width: 0;
-  padding-block: 0.875rem;
+  padding: 0.875rem;
   border-block: 1px solid var(--divider);
-  border-top: 0;
+  background: rgba(202, 228, 240, 0.1);
 }
 
 #prototype-to-prd .workspace-method {
   border-block: 0;
 }
 
-#prototype-to-prd .workspace-evidence-routing > .workspace-evidence-group,
+#prototype-to-prd .workspace-evidence-routing > .workspace-evidence-group {
+  grid-area: evidence;
+}
+
 #prototype-to-prd .workspace-evidence-routing > .workspace-architecture {
-  grid-area: auto;
+  grid-area: architecture;
+  padding-right: clamp(1rem, 2vw, 1.75rem);
+  padding-left: 0;
+  border-right: 1px solid var(--divider);
+  border-left: 0;
 }
 
 #prototype-to-prd .workspace-evidence {
@@ -1813,10 +1931,10 @@ html[lang="zh-CN"] .hero-workflow-path ol {
     grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
     grid-template-areas:
       "problem evolution"
-      "routing routing"
       "method method"
-      "human-gate human-gate"
-      "validation result";
+      "routing routing"
+      "validation validation"
+      "result result";
     gap: 0.75rem clamp(1.25rem, 2vw, 2rem);
   }
 
@@ -2180,12 +2298,17 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 @media (max-width: 56.25rem) {
   #prototype-to-prd .workspace-evidence-routing {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "architecture"
+      "evidence";
   }
 
   #prototype-to-prd .workspace-architecture {
     padding-top: 1rem;
+    padding-right: 0;
     padding-left: 0;
-    border-top: 1px solid var(--divider);
+    border-top: 0;
+    border-right: 0;
     border-left: 0;
   }
 
@@ -2340,7 +2463,6 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   }
 
   .workspace-evolution-stages,
-  .workspace-human-gate-evidence,
   .workspace-validation {
     grid-template-columns: 1fr;
   }
@@ -2350,12 +2472,6 @@ html[lang="zh-CN"] .hero-workflow-path ol {
       "label"
       "flow"
       "text";
-  }
-
-  .workspace-human-gate-outcome {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.625rem;
   }
 
   .workspace-evolution-stages {
@@ -2370,20 +2486,36 @@ html[lang="zh-CN"] .hero-workflow-path ol {
     content: "↓";
   }
 
-  .workspace-human-gate-evidence > .workspace-detail-label,
-  .workspace-human-gate-example {
-    grid-column: 1;
+  .workspace-validation-flow {
+    flex-wrap: wrap;
   }
 
-  .workspace-human-gate-outcome > div:last-child {
+  .workspace-delivery-readiness-header,
+  .workspace-delivery-readiness-lenses {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-delivery-readiness-header {
+    grid-template-areas:
+      "stage"
+      "title"
+      "headline"
+      "introduction";
+  }
+
+  .workspace-delivery-readiness-lens + .workspace-delivery-readiness-lens {
     padding-top: 0.625rem;
     padding-left: 0;
     border-top: 1px solid var(--divider);
     border-left: 0;
   }
 
-  .workspace-validation-flow {
-    flex-wrap: wrap;
+  .workspace-review-checks {
+    grid-template-columns: 1fr;
+  }
+
+  #prototype-to-prd .workspace-result .workspace-detail-text {
+    white-space: normal;
   }
 
   .workspace-architecture-layer {

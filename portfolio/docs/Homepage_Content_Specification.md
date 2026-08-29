@@ -9,11 +9,13 @@
 - Chinese and English use the same information hierarchy.
 - The page displays one language at a time; bilingual paragraphs are not shown together.
 - Each Collaboration Lane displays only: Task Nature, Collaboration Mode, Name, Problem, Workflow, and Result.
-- Homepage copy does not include Evidence detail, Regression detail, historical project detail, version history, or Known Limitation detail.
+- Homepage copy does not include Evidence detail, Regression detail, historical project detail, version history, or Known Limitation detail. Delivery Readiness is described as a second review lens; detailed evidence remains in the repository.
+- In the expanded Structured Case, the Agent flow is shown before the Generation Stage and Review Stage evidence. PRD Review belongs to the Review Stage, not to a separate Case or result section.
 - Exploration is a Collaboration Mode, not a Case Study.
-- Prototype-to-PRD and Reference-to-Style are the two Case Evidence entries.
+- PRD Collaboration Agent and Reference-to-Style are the two Case Evidence entries. Prototype-to-PRD remains the generation Skill and evolution starting point inside the Structured Case.
 - The following terms remain unchanged in both locales:
   - AI Collaboration Workspace
+  - PRD Collaboration Agent
   - Prototype-to-PRD
   - Reference-to-Style
   - Human Gate
@@ -106,18 +108,28 @@ Do not display Evidence, Regression, Version, Freeze, or Case Study labels in th
 
 ## 3.2 Structured Mode
 
-Prototype-to-PRD is the Case Evidence associated with Structured Mode.
+PRD Collaboration Agent is the Case Evidence associated with Structured Mode. Prototype-to-PRD remains its generation Skill and evolution starting point.
 
 | Lane field | English | 中文 |
 |---|---|---|
-| Task Nature | Stable · Repeatable · Clear criteria | 稳定 · 可重复 · 标准明确 |
-| Collaboration Mode | Reusable Skill + Human Gate | 可复用 Skill + Human Gate |
-| Name | Prototype-to-PRD | Prototype-to-PRD |
-| Problem | A prototype shows the interface, but not complete product rules. | 原型可以展示界面，却无法表达完整的产品规则。 |
-| Workflow | Prototype → Gap Detection → Human Gate → PRD | 原型 → 缺口识别 → Human Gate → PRD |
-| Result | Frozen v1.0 | Frozen v1.0 |
+| Task Nature | Multi-stage · Independently reviewable · Judgment boundary | 多阶段 · 可独立评审 · 存在判断边界 |
+| Collaboration Mode | Skill orchestration + Human Gate | Skill 编排 + Human Gate |
+| Name | PRD Collaboration Agent | PRD Collaboration Agent |
+| Problem | A prototype cannot directly become an implementation-ready PRD. | 原型不能直接成为可开发的 PRD。 |
+| Workflow | Prototype → Generate PRD → Review → Human Gate → Revise → Targeted Re-review → Ready | 原型 → 生成 PRD → 评审 → Human Gate → 修订 → 定向复审 → 开发就绪 |
+| Result | Two validated Skills collaborate within explicit judgment boundaries. | 两个已验证 Skill 在明确判断边界内连续协作。 |
 
-The homepage does not display Project A / B, Historical Regression, Evidence labels, or regression metrics.
+The homepage does not display Project A / B, Historical Regression, Evidence labels, regression metrics, or version numbers.
+
+### PRD Review lenses
+
+| Review lens | English | 中文 |
+|---|---|---|
+| Product Logic Review | Checks whether product logic is missing, conflicting, or undefined. | 看产品逻辑有没有缺失、冲突或未定义。 |
+| Logic checks | Completeness · Consistency · Definition | 完整性 · 一致性 · 明确性 |
+| Review Skill provenance | Started from a public PRD Review Skill, distilled the high-value checks, then added a specification-writing lens through Delivery Readiness. | 以公开的 PRD Review Skill 为起点，提炼高价值检查，再加入规格撰写视角（Delivery Readiness）。 |
+| Delivery Readiness | Checks whether already-defined rules can produce one implementation, testing, and acceptance expectation. | 看即使规则已经写了，是否还能形成唯一的实现、测试与验收预期。 |
+| Readiness checks | Implementation · Testability · Acceptance | 可开发 · 可测试 · 可验收 |
 
 ## 3.3 Creative Mode
 
@@ -130,7 +142,7 @@ Reference-to-Style is the Case Evidence associated with Creative Mode.
 | Name | Reference-to-Style | Reference-to-Style |
 | Problem | Open-ended style language can cause unwanted reconstruction. | 开放式风格语言会触发不需要的视觉重建。 |
 | Workflow | Failure → Diagnosis → Rule → Result | 失败 → 诊断 → 规则 → 结果 |
-| Result | Frozen v0.3.3 | Frozen v0.3.3 |
+| Result | A constrained, reviewable style output | 受约束、可评审的风格输出 |
 
 Mixed Regression Evidence belongs to the Reference-to-Style Case Detail and is not displayed on the homepage.
 
@@ -187,7 +199,7 @@ Mixed Regression Evidence belongs to the Reference-to-Style Case Detail and is n
 | Group label | COLLABORATION MODE |
 | Mode name | Conversational Prototyping |
 | Group label | CASE STUDIES |
-| Case name | Prototype-to-PRD |
+| Case name | PRD Collaboration Agent |
 | Case name | Reference-to-Style |
 | Closing statement | Design the right boundary between AI capability and human judgment. |
 
@@ -199,7 +211,7 @@ Mixed Regression Evidence belongs to the Reference-to-Style Case Detail and is n
 | 分组标签 | 协作模式 |
 | 模式名称 | Conversational Prototyping |
 | 分组标签 | 案例研究 |
-| 案例名称 | Prototype-to-PRD |
+| 案例名称 | PRD Collaboration Agent |
 | 案例名称 | Reference-to-Style |
 | 收束文案 | 设计 AI 能力与人类判断之间合适的边界。 |
 

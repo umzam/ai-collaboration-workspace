@@ -148,7 +148,7 @@
       "introduction": "将 PRD 生成与独立评审能力编排成受 Human Gate 控制的协作流程。Prototype-to-PRD 是这一能力的演进起点。",
       "problem": {
         "label": "问题",
-        "text": "原型能表达可观察行为，但不能证明完整的产品规则。PRD 生成后仍可能存在状态、权限、异常和原型一致性问题，未确认的产品语义不能由 AI 自行补齐。"
+        "text": "原型能表达可观察行为，但不能直接成为可开发的 PRD。状态、权限、异常和成功边界仍需确认，未确认的产品语义不能由 AI 自行补齐。"
       },
       "evolution": {
         "label": "能力演进",
@@ -159,7 +159,7 @@
           },
           {
             "name": "PRD Review Skill",
-            "description": "独立检查产品逻辑、状态、权限、异常及原型 ↔ PRD 一致性。"
+            "description": "以公开的 PRD Review Skill 为起点，提炼高价值的产品逻辑检查，再加入规格撰写视角（Delivery Readiness），形成当前 PRD Review。"
           },
           {
             "name": "PRD Collaboration Agent",
@@ -184,7 +184,7 @@
           {
             "label": "评审",
             "type": "ai",
-            "substeps": ["PRD Review Skill"]
+            "substeps": ["产品逻辑评审 + 交付就绪检查"]
           },
           {
             "label": "Human Gate",
@@ -214,7 +214,7 @@
         {
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
-          "alt": "Publication-safe 合成文档比对原型，包含来源、工作副本和完成入口",
+          "alt": "XML 双源比对工作台原型，包含来源、工作副本和加工完成入口",
           "label": "原型输入",
           "title": "",
           "description": "",
@@ -244,7 +244,7 @@
       "architecture": {
         "stageLabel": "生成阶段",
         "label": "PRD 生成 Skill 的内部机制",
-        "introduction": "这一层负责从原型生成规格；生成完成后，再进入独立评审与 Agent 编排。",
+        "introduction": "这一层负责把原型证据转化为 PRD；生成完成后，再进入独立评审与 Agent 编排。",
         "layers": [
           {
             "number": "01",
@@ -277,27 +277,56 @@
         },
         "boundary": {
           "label": "无法唯一确定 → Human Gate",
-          "text": "证据无法唯一确定的业务语义不进入 Skill 默认规则，由人决策并保留在具体项目中。"
+          "text": "证据无法唯一确定的业务语义不进入 Skill 默认规则，由人决策并保留在具体项目中。",
+          "principleLabel": "产品原则",
+          "principle": "缺失信息 ≠ 必须补齐，先判断是否属于当前需求范围。"
         }
       },
-      "humanGateEvidence": {
-        "label": "Human Gate E2E 证据",
-        "finding": "发现一个“缺失信息”：当前材料没有定义某个角色是否参与该功能。",
-        "question": "Agent 没有直接补充权限规则，而是先判断：这个角色是否属于当前需求范围？",
-        "decision": {
-          "label": "人工决定",
-          "text": "该角色不属于当前需求范围，因此归为本次需求范围外，不新增权限规则。"
-        },
-        "principle": {
-          "label": "产品原则",
-          "text": "缺失信息 ≠ 必须补齐，先判断是否属于当前需求范围。"
-        },
-        "example": "Synthetic reconstruction：生成 PRD 时发现“独立 Reviewer 角色是否属于当前 AI enrichment 范围”无法由现有证据唯一确定。"
-      },
       "validation": {
-        "label": "验证",
-        "workflow": ["发现 4 个问题", "关闭 4 个", "0 个遗留", "开发就绪"],
-        "text": "Human Gate 在完整 E2E 中断流程，人工决定后恢复执行，4 个评审问题经定向复审全部关闭。公开案例是基于已观察产品工作流模式构建的 synthetic reconstruction，不是生产指标。"
+        "deliveryReadiness": {
+          "stageLabel": "评审阶段",
+          "label": "PRD Review",
+          "headline": "从“产品逻辑完整”进一步检查 PRD 是否可开发、可测试、可验收",
+          "introduction": "产品逻辑评审更擅长发现“产品逻辑有没有缺”；交付就绪检查更擅长发现“即使规则已经写了，是否还能形成唯一的实现、测试与验收预期”。",
+          "logicReview": {
+            "name": "产品逻辑评审",
+            "text": "看产品逻辑有没有缺失、冲突或未定义",
+            "checks": [
+              {
+                "name": "完整性",
+                "text": "核心状态、角色与异常是否覆盖"
+              },
+              {
+                "name": "一致性",
+                "text": "规则、流程与权限是否相互冲突"
+              },
+              {
+                "name": "明确性",
+                "text": "术语、边界与结果是否定义清楚"
+              }
+            ]
+          },
+          "readinessReview": {
+            "name": "交付就绪检查",
+            "text": "看即使规则已经写了，是否还能形成唯一的实现、测试与验收预期",
+            "lensLabel": "SPEC WRITING LENS · 规格撰写视角",
+            "lensText": "检查规则是否写到足以形成唯一的实现、测试与验收预期"
+          },
+          "dimensions": [
+            {
+              "name": "可开发检查",
+              "text": "开发能否形成唯一实现预期"
+            },
+            {
+              "name": "可测试检查",
+              "text": "测试能否形成唯一测试预期"
+            },
+            {
+              "name": "可验收检查",
+              "text": "产品能否明确判断通过 / 不通过"
+            }
+          ]
+        }
       },
       "result": {
         "label": "结果",

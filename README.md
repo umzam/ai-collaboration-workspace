@@ -19,7 +19,7 @@
 
 ### Prototype-to-PRD
 
-[Prototype-to-PRD](skills/prototype-to-prd/) 是自研 Skill。它从原型中提取可观察事实、识别状态、权限、异常和闭环缺口，并通过 Human Gate 控制无法由现有证据唯一确定的产品语义。
+[Prototype-to-PRD](skills/prototype-to-prd/) 是自研 Skill。它从原型中提取可观察事实、识别状态、权限、异常和闭环缺口，将已确认内容转化为 PRD，并通过 Human Gate 控制无法由现有证据唯一确定的产品语义。
 
 ### Reference-to-Style
 
@@ -28,6 +28,16 @@
 ### PRD Review
 
 [PRD Review](skills/prd-review/) 基于开源项目 [yihannangua/prd-review-skill](https://github.com/yihannangua/prd-review-skill) 进行真实项目测试和裁剪。上游 Skill 采用 MIT License；本项目保留高价值的产品逻辑、流程、状态、权限、异常和 Prototype ↔ PRD 一致性检查，同时针对日常产品评审进行了以下适配：
+
+评审包含两个并列视角，但仍属于同一个 PRD Review Skill：Product Logic Review 更擅长发现“产品逻辑有没有缺”；Delivery Readiness 更擅长发现“即使规则已经写了，是否还能形成唯一的实现、测试与验收预期”。它不是第二轮 Review，也不是独立 Skill。详细回归证据保留在 `skills/prd-review/evaluation/readiness-v0.2/`。
+
+Delivery Readiness 从规格撰写角度补充三项检查：
+
+- **Implementation Readiness**：规则是否足够明确到可以形成唯一实现；
+- **Testability**：规则是否足够明确到可以形成唯一测试预期；
+- **Acceptance Readiness**：产品是否能够明确判断通过或不通过。
+
+Readiness 只在发现独立的实现、测试或验收缺口时新增 Finding；如果只是强化已有 Finding 的交付影响，则合并进原 Finding，不重复输出。
 
 - 从完整深度审计收紧为少量高价值 Findings；
 - 将 Route 与 Human Gate 分离；
@@ -75,6 +85,8 @@ Agent 负责决定何时调用 Skill、何时暂停、如何根据 Human Decisio
 - [Initial review — 4 Findings](cases/prd-collaboration/e2e-01/artifacts/02-review.md)
 - [Recorded Human Decision](cases/prd-collaboration/e2e-01/artifacts/03-human-decision.md)
 - [Targeted re-review — 4 Closed, 0 Remaining](cases/prd-collaboration/e2e-01/artifacts/05-targeted-re-review.md)
+
+PRD Review 的 Delivery Readiness 另外通过 earlier / mature PRD 两组 regression case 做了行为验证：早期 PRD 能提前暴露更多交付缺口，成熟 PRD 不会因为增加 Readiness 而产生明显的重复 Finding 膨胀。这里的验证不是 benchmark、性能或准确率指标；详细 evidence 见 `skills/prd-review/evaluation/readiness-v0.2/`。
 
 ## Repository Structure
 

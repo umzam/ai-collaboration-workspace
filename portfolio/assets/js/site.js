@@ -387,6 +387,10 @@
     introduction.className = "workspace-architecture-introduction";
     introduction.textContent = architecture.introduction;
 
+    const projectEvidence = document.createElement("p");
+    projectEvidence.className = "workspace-architecture-project-evidence";
+    projectEvidence.textContent = architecture.projectEvidence;
+
     const layerElements = new Map();
 
     architecture.layers.forEach((layer) => {
@@ -459,7 +463,11 @@
     boundaryText.className = "workspace-architecture-boundary-text";
     boundaryText.textContent = architecture.boundary.text;
 
-    boundary.append(boundaryLabel, boundaryText);
+    const decisionRights = document.createElement("p");
+    decisionRights.className = "workspace-architecture-decision-rights";
+    decisionRights.textContent = architecture.boundary.decisionRights;
+
+    boundary.append(boundaryLabel, boundaryText, decisionRights);
 
     if (architecture.boundary.principle) {
       const principle = document.createElement("div");
@@ -508,7 +516,7 @@
     );
 
     map.append(layerStack, mainPath, branches, outputPath);
-    container.append(stageLabel, title, introduction, map);
+    container.append(stageLabel, title, introduction, projectEvidence, map);
     return container;
   };
 
@@ -534,6 +542,33 @@
     });
 
     container.append(label, stages);
+    return container;
+  };
+
+  const createAgentRationale = (rationale) => {
+    const container = document.createElement("aside");
+    container.className = "workspace-detail workspace-agent-rationale";
+
+    const heading = document.createElement("div");
+    heading.className = "workspace-agent-rationale-heading";
+
+    const label = document.createElement("p");
+    label.className = "workspace-detail-label";
+    label.textContent = rationale.label;
+
+    const title = document.createElement("h3");
+    title.textContent = rationale.title;
+    heading.append(label, title);
+
+    const explanation = document.createElement("p");
+    explanation.className = "workspace-agent-rationale-text";
+    explanation.textContent = rationale.text;
+
+    const judgment = document.createElement("p");
+    judgment.className = "workspace-agent-rationale-judgment";
+    judgment.textContent = rationale.judgment;
+
+    container.append(heading, explanation, judgment);
     return container;
   };
 
@@ -855,6 +890,10 @@
       groups.className = "workspace-method-groups";
       groups.append(...section.method.groups.map(createMethodGroup));
       method.append(groups);
+    }
+
+    if (isAgentFlow && section.agentRationale) {
+      content.append(createAgentRationale(section.agentRationale));
     }
 
     content.append(method);

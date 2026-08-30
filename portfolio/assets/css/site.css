@@ -749,6 +749,37 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   line-height: 1.45;
 }
 
+.workspace-agent-rationale {
+  grid-area: rationale;
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.42fr) minmax(0, 1fr) minmax(0, 0.72fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+  align-items: start;
+  padding-block: 0.75rem;
+  border-block: 1px solid var(--divider);
+}
+
+.workspace-agent-rationale-heading h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.workspace-agent-rationale-text,
+.workspace-agent-rationale-judgment {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.workspace-agent-rationale-judgment {
+  padding-left: 0.75rem;
+  border-left: 0.1875rem solid var(--ai);
+  color: var(--ink);
+  font-weight: 500;
+}
+
 .workspace-method-note {
   margin: 0.5rem 0 0;
   color: var(--soft-ink);
@@ -981,6 +1012,15 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   line-height: 1.5;
 }
 
+.workspace-architecture-project-evidence {
+  margin: 0.5rem 0 0;
+  padding-left: 0.625rem;
+  border-left: 0.125rem solid rgba(17, 39, 63, 0.2);
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
 .workspace-architecture-map {
   display: grid;
   gap: 0.75rem;
@@ -1143,6 +1183,17 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 500;
+  line-height: 1.45;
+}
+
+.workspace-architecture-decision-rights {
+  margin-top: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  border-left: 0.1875rem solid var(--human-line);
+  background: rgba(255, 246, 194, 0.38);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
   line-height: 1.45;
 }
 
@@ -1622,6 +1673,7 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   grid-template-areas:
     "problem"
     "evolution"
+    "rationale"
     "method"
     "routing"
     "validation"
@@ -1928,9 +1980,10 @@ html[lang="zh-CN"] .hero-workflow-path ol {
   }
 
   #prototype-to-prd .workspace-section-content {
-    grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
+    grid-template-columns: minmax(21rem, 0.85fr) minmax(0, 1.15fr);
     grid-template-areas:
       "problem evolution"
+      "rationale rationale"
       "method method"
       "routing routing"
       "validation validation"
@@ -2296,6 +2349,10 @@ html[lang="zh-CN"] .hero-workflow-path ol {
 }
 
 @media (max-width: 56.25rem) {
+  .workspace-agent-rationale {
+    grid-template-columns: 1fr;
+  }
+
   #prototype-to-prd .workspace-evidence-routing {
     grid-template-columns: 1fr;
     grid-template-areas:

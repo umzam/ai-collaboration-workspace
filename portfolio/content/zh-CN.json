@@ -145,10 +145,10 @@
       "kind": "case",
       "eyebrow": "02 · 结构化模式",
       "title": "PRD Collaboration Agent",
-      "introduction": "将 PRD 生成与独立评审能力编排成受 Human Gate 控制的协作流程。Prototype-to-PRD 是这一能力的演进起点。",
+      "introduction": "将 PRD 生成与独立评审编排成轻量协作流程；当证据无法唯一确定产品语义时，通过 Human Gate 暂停并交还给人决策。",
       "problem": {
-        "label": "问题",
-        "text": "原型能表达可观察行为，但不能直接成为可开发的 PRD。状态、权限、异常和成功边界仍需确认，未确认的产品语义不能由 AI 自行补齐。"
+        "label": "Skill 的设计起点",
+        "text": "复杂 B 端产品的难点不只在页面，而在业务规则、状态权限、平台约束与历史决策的长期叠加。原型只能表达其中可观察的一部分；如果直接让 AI 补全 PRD，容易把事实、既有规则和新的产品决策混在一起。因此，这个 Skill 先定义证据与规则边界，再执行 PRD 生成。"
       },
       "evolution": {
         "label": "能力演进",
@@ -158,8 +158,8 @@
             "description": "从原型中提取可观察事实、识别规格缺口，并将已确认内容转化为 PRD。"
           },
           {
-            "name": "PRD Review Skill",
-            "description": "以公开的 PRD Review Skill 为起点，提炼高价值的产品逻辑检查，再加入规格撰写视角（Delivery Readiness），形成当前 PRD Review。"
+            "name": "PRD 评审 Skill",
+            "description": "以公开的 PRD 评审 Skill 为起点，提炼高价值的产品逻辑检查，再加入交付就绪视角，形成当前 PRD 评审 Skill。"
           },
           {
             "name": "PRD Collaboration Agent",
@@ -167,9 +167,15 @@
           }
         ]
       },
+      "agentRationale": {
+        "label": "设计选择",
+        "title": "为什么采用轻量 Agent",
+        "text": "PRD 生成、评审、修订与定向复审的阶段关系相对稳定，因此不让 AI 每次重新规划，而是显式编排已验证 Skill。Agent 只管理阶段推进、Skill 调用、暂停与恢复；自主性保留在 Skill 执行中。证据不足且判断会改变产品语义时，进入 Human Gate。",
+        "judgment": "对高确定性企业流程而言，更高自主性不天然意味着更高产品价值。显式编排减少决策漂移，Human Gate 保留关键产品判断。"
+      },
       "method": {
         "label": "Agent 主流程",
-        "introduction": "这是一个轻量的 Skill 编排 Agent：不负责自主规划复杂任务，而是负责调用两个已验证的 Skill、在 Human Gate 处暂停，并在人工决策后恢复执行。",
+        "introduction": "",
         "workflow": [
           {
             "label": "原型",
@@ -215,12 +221,12 @@
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
           "alt": "XML 双源比对工作台原型，包含来源、工作副本和加工完成入口",
-          "label": "原型输入",
-          "title": "",
-          "description": "",
+          "label": "输入证据",
+          "title": "原型",
+          "description": "原型提供可观察的界面事实，但不能自动证明完整产品规则。",
           "groups": [
             {
-              "label": "来自原型",
+              "label": "可观察事实",
               "heading": "可直接观察",
               "items": [
                 "页面结构",
@@ -229,12 +235,12 @@
               ]
             },
             {
-              "label": "无法唯一确定",
+              "label": "无法唯一确定的语义",
               "heading": "无法仅凭原型确定",
               "items": [
-                "状态流转",
-                "权限",
-                "异常恢复",
+                "状态与权限",
+                "异常与恢复",
+                "人工接管",
                 "成功边界"
               ]
             }
@@ -243,27 +249,28 @@
       ],
       "architecture": {
         "stageLabel": "生成阶段",
-        "label": "PRD 生成 Skill 的内部机制",
-        "introduction": "这一层负责把原型证据转化为 PRD；生成完成后，再进入独立评审与 Agent 编排。",
+        "label": "PRD 生成 Skill：证据与规则边界",
+        "introduction": "先区分可观察事实、公司规范与平台不变量，再决定 AI 被允许推断到哪里；PRD 生成不只是扩写页面，还要显式化正常流程之外的状态、权限、异常、恢复和人工接管。",
+        "projectEvidence": "项目内已确认的业务规则与历史决策作为当前证据使用，不固化为 Skill 默认规则。",
         "layers": [
           {
             "number": "01",
             "role": "core",
-            "name": "Core Skill",
+            "name": "核心 Skill",
             "responsibility": "证据读取、缺口识别与唯一性判断",
             "condition": "每次运行"
           },
           {
             "number": "02",
             "role": "company",
-            "name": "Company Rules",
+            "name": "公司规则",
             "responsibility": "PRD 结构、表达颗粒度、批注与文档规范",
             "condition": "输出公司格式 PRD 时"
           },
           {
             "number": "03",
             "role": "platform",
-            "name": "Platform Rules",
+            "name": "平台规则",
             "responsibility": "已确认的平台状态、权限与行为不变量",
             "condition": "适用对象与范围明确时"
           }
@@ -278,6 +285,7 @@
         "boundary": {
           "label": "无法唯一确定 → Human Gate",
           "text": "证据无法唯一确定的业务语义不进入 Skill 默认规则，由人决策并保留在具体项目中。",
+          "decisionRights": "决策权：规则能唯一确定 → AI 执行；证据无法唯一确定且会改变产品语义 → 人决策。",
           "principleLabel": "产品原则",
           "principle": "缺失信息 ≠ 必须补齐，先判断是否属于当前需求范围。"
         }
@@ -285,7 +293,7 @@
       "validation": {
         "deliveryReadiness": {
           "stageLabel": "评审阶段",
-          "label": "PRD Review",
+          "label": "PRD 评审",
           "headline": "从“产品逻辑完整”进一步检查 PRD 是否可开发、可测试、可验收",
           "introduction": "产品逻辑评审更擅长发现“产品逻辑有没有缺”；交付就绪检查更擅长发现“即使规则已经写了，是否还能形成唯一的实现、测试与验收预期”。",
           "logicReview": {
@@ -309,7 +317,7 @@
           "readinessReview": {
             "name": "交付就绪检查",
             "text": "看即使规则已经写了，是否还能形成唯一的实现、测试与验收预期",
-            "lensLabel": "SPEC WRITING LENS · 规格撰写视角",
+            "lensLabel": "规格撰写视角",
             "lensText": "检查规则是否写到足以形成唯一的实现、测试与验收预期"
           },
           "dimensions": [
@@ -338,14 +346,14 @@
       "kind": "case",
       "eyebrow": "03 · 创意模式",
       "title": "Reference-to-Style",
-      "introduction": "把开放式视觉生成中的失败，转化为可检查、可复用的生成规则。",
+      "introduction": "从生成失败中提取规则，让主观风格变得可控、可复用。",
       "problem": {
         "label": "失败表现",
         "text": "开放式风格生成容易保留过多非核心信息。"
       },
       "goal": {
-        "label": "生成目标",
-        "text": "目标不是尽可能还原照片，而是在保留主体身份与关键互动关系的前提下，用尽可能少的视觉线索重建固定的 loose-line 风格。"
+        "label": "设计目标",
+        "text": "保留主体是谁、彼此如何互动；压缩非核心细节，用有限的视觉线索形成一致的松弛手绘风格。"
       },
       "method": {
         "label": "规则如何介入",
@@ -358,22 +366,22 @@
           {
             "label": "内容筛选",
             "type": "ai",
-            "substeps": ["内容本质提取", "场景角色判断", "内容准入过滤器（Inclusion Filter）"]
+            "substeps": ["内容本质提取", "场景角色判断", "内容准入过滤"]
           },
           {
             "label": "特征压缩",
             "type": "ai",
-            "substeps": ["最小线索计划（Minimal Cue Plan）", "关键身份线索保留", "非核心细节压缩"]
+            "substeps": ["最小线索计划", "关键身份线索保留", "非核心细节压缩"]
           },
           {
             "label": "生成编译",
             "type": "ai",
-            "substeps": ["松线风格编译器（Loose-Line Compiler）", "语义线索 → 视觉原语", "生成规格校验器（Generation Spec Validator）"]
+            "substeps": ["松弛手绘编译", "语义线索 → 视觉原语", "生成规格校验"]
           },
           {
             "label": "评估",
             "type": "human",
-            "substeps": ["质量检查（QA）", "人工评估", "可选一次修正"]
+            "substeps": ["质量检查", "人工评估", "可选一次修正"]
           }
         ],
         "groups": [
@@ -416,7 +424,7 @@
         {
           "kind": "rule",
           "label": "生成规则",
-          "title": "特征压缩 + 视觉原语（Feature Compression + Visual Primitive）",
+          "title": "特征压缩 + 视觉原语",
           "description": "不是从完整照片不断删减，而是从关键身份与关系线索重新构建。"
         },
         {
@@ -460,7 +468,7 @@
       },
       "result": {
         "label": "结果",
-        "text": "规则约束生成边界，但人工评估决定最终接受度。"
+        "text": "规则压缩生成空间，使不同输入形成一致的松弛手绘表达；人工评估决定主体身份、互动关系与目标风格是否成立。"
       }
     }
   ],
@@ -483,7 +491,7 @@
         "规则约束",
         "接受度判断"
       ],
-      "description": "AI 把失败转化为特征压缩与视觉基元规则；结果是否保留正确的身份与关系，由人工评估判断。"
+      "description": "AI 从失败中提取特征压缩与视觉原语规则，压缩生成空间；人工评估判断结果是否保留正确的主体身份与互动关系，并符合目标风格。"
     },
     "humanGate": {
       "label": "共同判断边界",

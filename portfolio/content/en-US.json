@@ -145,10 +145,10 @@
       "kind": "case",
       "eyebrow": "02 · STRUCTURED MODE",
       "title": "PRD Collaboration Agent",
-      "introduction": "Orchestrate PRD generation and independent review into a collaboration flow controlled by a Human Gate. Prototype-to-PRD is the starting point in this capability’s evolution.",
+      "introduction": "Orchestrate PRD generation and independent review into a lightweight collaboration flow. When evidence cannot uniquely determine product semantics, the flow pauses at a Human Gate and returns the decision to a person.",
       "problem": {
-        "label": "Problem",
-        "text": "A prototype can express observable behavior, but it cannot directly become an implementation-ready PRD. States, permissions, exceptions, and success boundaries still require confirmation; AI must not fill in unconfirmed product semantics on its own."
+        "label": "Why This Skill Exists",
+        "text": "The difficulty of a complex B2B product is not only the interface, but the accumulated business rules, state and permission logic, platform constraints, and historical decisions. A prototype exposes only the observable part; asking AI to complete the PRD directly can mix facts, existing rules, and new product decisions. This Skill therefore defines evidence and rule boundaries before generating the PRD."
       },
       "evolution": {
         "label": "Evolution",
@@ -167,9 +167,15 @@
           }
         ]
       },
+      "agentRationale": {
+        "label": "DESIGN CHOICE",
+        "title": "Why a Lightweight Agent",
+        "text": "The stage relationships across PRD generation, review, revision, and targeted re-review are relatively stable, so AI does not re-plan each next step. Instead, validated Skills are explicitly orchestrated. The Agent only manages stage progression, Skill invocation, pauses, and resumption; autonomy remains inside Skill execution. When evidence is insufficient and a decision would change product semantics, the flow enters a Human Gate.",
+        "judgment": "For highly determined enterprise workflows, more autonomy does not inherently create more product value. Explicit orchestration reduces decision drift, while the Human Gate preserves critical product judgment."
+      },
       "method": {
         "label": "Agent Flow",
-        "introduction": "This is a lightweight Skill-orchestration Agent. It does not autonomously plan complex tasks; it calls two validated Skills, pauses at a Human Gate, and resumes after a human decision.",
+        "introduction": "",
         "workflow": [
           {
             "label": "Prototype",
@@ -215,12 +221,12 @@
           "kind": "prototype-input",
           "image": "assets/images/prototype-to-prd/01-prototype-xml-compare.png",
           "alt": "XML dual-source comparison prototype with sources, working copy, and completion control",
-          "label": "Prototype Input",
-          "title": "",
-          "description": "",
+          "label": "INPUT EVIDENCE",
+          "title": "Prototype",
+          "description": "A prototype provides observable interface facts, but it does not automatically prove complete product rules.",
           "groups": [
             {
-              "label": "From Prototype",
+              "label": "OBSERVABLE FACTS",
               "heading": "Directly observable",
               "items": [
                 "Page structure",
@@ -229,12 +235,12 @@
               ]
             },
             {
-              "label": "Not Uniquely Determined",
+              "label": "NON-UNIQUE SEMANTICS",
               "heading": "Not determined by the prototype alone",
               "items": [
-                "State transitions",
-                "Permissions",
-                "Exception recovery",
+                "States and permissions",
+                "Exceptions and recovery",
+                "Human takeover",
                 "Success boundaries"
               ]
             }
@@ -243,8 +249,9 @@
       ],
       "architecture": {
         "stageLabel": "GENERATION STAGE",
-        "label": "Inside the PRD Generation Skill",
-        "introduction": "This layer transforms prototype evidence into a PRD. After generation, the work moves into independent review and Agent orchestration.",
+        "label": "PRD Generation Skill: Evidence and Rule Boundaries",
+        "introduction": "First separate observable facts, company conventions, and platform invariants, then decide what AI is allowed to infer. PRD generation is not merely expanding an interface; it must make states, permissions, exceptions, recovery, and human takeover beyond the happy path explicit.",
+        "projectEvidence": "Confirmed business rules and historical decisions within the project are used as current evidence, not hardened into default Skill rules.",
         "layers": [
           {
             "number": "01",
@@ -278,6 +285,7 @@
         "boundary": {
           "label": "Not Uniquely Determined → Human Gate",
           "text": "Business semantics that evidence cannot uniquely determine stay out of Skill defaults; people decide them and keep them within the specific project.",
+          "decisionRights": "Decision Rights: uniquely determined by rules → AI executes; not uniquely determined by evidence and changes product semantics → people decide.",
           "principleLabel": "Product Principle",
           "principle": "Missing information does not automatically need to be filled in. First determine whether it belongs to the current scope."
         }
@@ -338,14 +346,14 @@
       "kind": "case",
       "eyebrow": "03 · CREATIVE MODE",
       "title": "Reference-to-Style",
-      "introduction": "Turn failures in open-ended visual generation into inspectable, reusable generation rules.",
+      "introduction": "Turn generation failures into rules, making subjective style controllable and reusable.",
       "problem": {
         "label": "What failed",
         "text": "Open-ended style generation tends to preserve too much non-essential information."
       },
       "goal": {
-        "label": "Why this goal",
-        "text": "The goal is not to reproduce the photo as faithfully as possible. It is to rebuild a fixed loose-line style with the fewest visual cues that still preserve subject identity and the key interaction."
+        "label": "Design Goal",
+        "text": "Preserve who the subjects are and how they interact; compress non-essential detail and use limited visual cues to form a consistent loose-line style."
       },
       "method": {
         "label": "How rules intervene",
@@ -460,7 +468,7 @@
       },
       "result": {
         "label": "Result",
-        "text": "Rules constrain the generation boundary, but Human Evaluation decides final acceptance."
+        "text": "Rules narrow the generation space so different inputs form a consistent loose-line expression; Human Evaluation decides whether the intended identity, interaction, and target style are preserved."
       }
     }
   ],
@@ -483,7 +491,7 @@
         "Rule constraints",
         "Acceptance judgment"
       ],
-      "description": "AI turns failure into Feature Compression and Visual Primitive rules. Human Evaluation decides whether the result preserves the right identity and relationship."
+      "description": "AI extracts Feature Compression and Visual Primitive rules from failures to narrow the generation space; Human Evaluation decides whether the result preserves the intended subject identity and interaction while matching the target style."
     },
     "humanGate": {
       "label": "SHARED JUDGMENT BOUNDARY",
